@@ -1,0 +1,32 @@
+{% for error in errors %}
+    <p>{{ error }}</p>
+{% endfor %}
+<form method="POST" action="{{ url_for('bean_purchase') }}">
+    {{ form.hidden_tag() }}
+    {{ form.name.label }} {{ form.name }} {{ form.name.errors }}
+    {{ form.type.label }} {{ form.type }} {{ form.type.errors }}
+    {{ form.weight.label }} {{ form.weight }} {{ form.weight.errors }}
+    {{ form.purchase_date.label }} {{ form.purchase_date }} {{ form.purchase_date.errors }}
+    {{ form.notes.label }} {{ form.notes }} {{ form.notes.errors }}
+    <input type="submit" value="Go">
+</form>
+{% if bean_purchases %}
+    <table>
+        <tr>
+            <th>Purchase Date</th>
+            <th>Bean Type</th>
+            <th>Bean Name</th>
+            <th>Weight (grams)</th>
+            <th>Notes</th>
+        </tr>
+{% for purchase in bean_purchases %}
+        <tr>
+            <td>{{ purchase.purchase_date }}</td>
+            <td>{{ purchase.bean_type_str() }}</td>
+            <td>{{ purchase.name }}</td>
+            <td>{{ purchase.weight }}</td>
+            <td>{{ purchase.notes }}</td>
+        </tr>
+{% endfor %}
+    </table>
+{% endif %}

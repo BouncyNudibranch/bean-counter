@@ -3,6 +3,9 @@ from pbkdf2 import crypt
 from app import db
 
 
+BEAN_TYPES = {1: 'Green', 2: 'Roasted', 3: 'Pre-ground'}
+
+
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(255))
@@ -78,8 +81,18 @@ class Roast(db.Model):
 class Bean(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(255))
+    bean_type = db.Column(db.SmallInteger)
     weight = db.Column(db.SmallInteger)
-    purchase_date = db.Column(db.DateTime)
+    purchase_date = db.Column(db.Date)
     notes = db.Column(db.Text)
 
-    user_id = None
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+
+    def bean_type_str(self):
+        return BEAN_TYPES[self.bean_type]
+
+    @staticmethod
+    def add_bean(bean, commit=True):
+        db.session.add(bean)
+        if commit:
+            db.session.commit()
