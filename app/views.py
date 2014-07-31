@@ -1,5 +1,5 @@
 from flask import render_template, redirect, g, request, url_for
-from flask_login import current_user, login_user
+from flask_login import current_user, login_user, logout_user
 
 from app import app, db, login_manager
 from app.models import User
@@ -60,3 +60,8 @@ def register():
     else:
         errors.append('Please complete the form!')
     return render_template('register.html', form=form, errors=errors)
+
+@app.route('/logout')
+def logout():
+    logout_user()
+    return redirect(url_for('home'))
