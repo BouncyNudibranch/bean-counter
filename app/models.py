@@ -1,3 +1,5 @@
+from pbkdf2 import crypt
+
 from app import db
 
 
@@ -19,7 +21,17 @@ class User(db.Model):
         return unicode(self.id)
 
     def verify_password(self, password):
-        return password == self.password
+        return self.password == crypt(password, self.password)
+
+    @staticmethod
+    def hash_password(password):
+        return crypt(password)
+
+    @staticmethod
+    def add_user(user, commit=True):
+        db.session.add(user)
+        if commit:
+            db.session.commit()
 
 
 class Brew(db.Model):

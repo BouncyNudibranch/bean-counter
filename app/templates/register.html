@@ -1,0 +1,10 @@
+{% for error in errors %}
+    <p>{{ error }}</p>
+{% endfor %}
+<form method="POST" action="{{ url_for('register') }}">
+    {{ form.hidden_tag() }}
+    {{ form.username.label }} {{ form.username(size=20) }}
+    {{ form.password.label }} {{ form.password(size=20) }}
+    {{ form.password_confirm.label }} {{ form.password_confirm(size=20) }}
+    <input type="submit" value="Go">
+</form>

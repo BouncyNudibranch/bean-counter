@@ -3,7 +3,7 @@ from flask_login import current_user, login_user
 
 from app import app, db, login_manager
 from app.models import User
-from app.forms import LoginForm
+from app.forms import LoginForm, RegisterForm
 
 
 @login_manager.user_loader
@@ -32,6 +32,7 @@ def login():
         if user is not None:
             if user.verify_password(form.password.data):
                 login_user(user)
+                return redirect(url_for('home'))
             else:
                 errors.append('Invalid password!')
         else:
@@ -39,3 +40,23 @@ def login():
     else:
         errors.append('Please complete the form!')
     return render_template('login.html', form=form, errors=errors)
+
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    if g.user is not None and g.user.is_authenticated():
+        return redirect(url_for('home'))
+    form = RegisterForm()
+    errors = []
+    if form.validate_on_submit():
+        user = User.query.filter_by(username=form.username.data).first()
+        if user is None:
+            user = User(username=form.username.data, password=User.hash_password(form.password.data))
+            User.add_user(user)
+            login_user(user)
+            return redirect(url_for('home'))
+        else:
+            errors.append('Username already exists!')
+    else:
+        errors.append('Please complete the form!')
+    return render_template('register.html', form=form, errors=errors)
