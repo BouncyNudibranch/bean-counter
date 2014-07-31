@@ -1,0 +1,53 @@
+{% for error in errors %}
+    <p>{{ error }}</p>
+{% endfor %}
+<form method="POST" action="{{ url_for('brew') }}">
+    {{ form.hidden_tag() }}
+    {{ form.bean_id.label }} {{ form.bean_id }} {{ form.bean_id.errors }}
+    {{ form.roast_batch.label }} {{ form.roast_batch }} {{ form.roast_batch.errors }}
+    {{ form.grind_size.label }} {{ form.grind_size }} {{ form.grind_size.errors }}
+    {{ form.bean_dose.label }} {{ form.bean_dose }} {{ form.bean_dose.errors }}
+    {{ form.water_dose.label }} {{ form.water_dose }} {{ form.water_dose.errors }}
+    {{ form.extraction_time.label }} {{ form.extraction_time }} {{ form.extraction_time.errors }}
+    {{ form.brew_method.label }} {{ form.brew_method }} {{ form.brew_method.errors }}
+    {{ form.filter_type.label }} {{ form.filter_type }} {{ form.filter_type.errors }}
+    {{ form.brew_date.label }} {{ form.brew_date }} {{ form.brew_date.errors }}
+    {{ form.notes.label }} {{ form.notes }} {{ form.notes.errors }}
+    <input type="submit" value="Go">
+</form>
+{% if past_brews %}
+    <table>
+        <tr>
+            <th>Brew Date</th>
+            <th>Bean</th>
+            <th>Grind Size</th>
+            <th>Brew Method</th>
+            <th>Bean Weight (grams)</th>
+            <th>Water Volume (mL)</th>
+            <th>Extraction Time (sec)</th>
+            <th>Filter Type</th>
+            <th>Roast Batch</th>
+            <th>Notes</th>
+        </tr>
+{% for brew in past_brews %}
+        <tr>
+            <td>{{ brew.brew_date }}</td>
+            <td><a href="#bean-{{ brew.bean.id }}">{{ brew.bean.name }}</a></td>
+            <td>{{ brew.grind_size_str() }}</td>
+            <td>{{ brew.brew_method_str() }}</td>
+            <td>{{ brew.bean_dose }}</td>
+            <td>{{ brew.water_dose }}</td>
+            <td>{{ brew.extraction_time }}</td>
+            <td>{{ brew.filter_type_str() }}</td>
+            <td>
+            {% if brew.roast is not none %}
+                <a href="#roast-{{ brew.roast.id }}">{{ brew.roast.roast_date }}</a>
+            {% else %}
+                N/A
+            {% endif %}
+            </td>
+            <td>{{ brew.notes }}</td>
+        </tr>
+{% endfor %}
+    </table>
+{% endif %}

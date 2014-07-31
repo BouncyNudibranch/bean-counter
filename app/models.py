@@ -3,7 +3,49 @@ from pbkdf2 import crypt
 from app import db
 
 
-BEAN_TYPES = {1: 'Green', 2: 'Roasted', 3: 'Pre-ground'}
+BEAN_TYPES = {
+    1: 'Green',
+    2: 'Roasted',
+    3: 'Pre-ground'
+}
+GRIND_SIZES = {
+    1: 'Extra Coarse',
+    2: 'Coarse',
+    3: 'Medium-Coarse',
+    4: 'Medium',
+    5: 'Medium-Fine',
+    6: 'Fine',
+    7: 'Extra Fine'
+}
+FILTER_TYPES = {
+    1: 'None',
+    2: 'Paper',
+    3: 'Stainless Steel'
+}
+BREW_METHODS = {
+    0: 'Other',
+    1: 'Aeropress',
+    2: 'Chemex',
+    3: 'Clever',
+    4: 'Cold Brew',
+    5: 'Pour Over',
+    6: 'Press',
+    7: 'Siphon/Vac Pot',
+    8: 'Stove Top',
+    9: 'Turkish'
+}
+ROASTER_MACHINES = {
+    0: 'Other',
+    1: 'FreshRoast SR300',
+    2: 'FreshRoast SR500',
+    3: 'FreshRoast SR700',
+    4: 'Behmor 1600',
+    5: 'Behmor 1600 Plus',
+    6: 'Popcorn Air Popper',
+    7: 'Whirley Pop',
+    8: 'Cast Iron Skillet',
+    9: 'Heat Gun'
+}
 
 
 class User(db.Model):
@@ -48,9 +90,24 @@ class Brew(db.Model):
     brew_date = db.Column(db.DateTime)
     notes = db.Column(db.Text)
 
-    bean_id = None
-    user_id = None
-    roast_id = None
+    bean_id = db.Column(db.Integer, db.ForeignKey('bean.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    roast_id = db.Column(db.Integer, db.ForeignKey('roast.id'), default=None)
+
+    def brew_method_str(self):
+        return BREW_METHODS[self.brew_method]
+
+    def filter_type_str(self):
+        return FILTER_TYPES[self.filter_type]
+
+    def grind_size_str(self):
+        return GRIND_SIZES[self.grind_size]
+
+    @staticmethod
+    def add_brew(brew, commit=True):
+        db.session.add(brew)
+        if commit:
+            db.session.commit()
 
 
 class Roast(db.Model):
@@ -74,8 +131,10 @@ class Roast(db.Model):
     roast_date = db.Column(db.DateTime)
     notes = db.Column(db.Text)
 
-    bean_id = None
-    user_id = None
+    bean_id = db.Column(db.Integer, db.ForeignKey('bean.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+
+    brews = db.relationship('Brew', backref='roast', lazy='dynamic')
 
 
 class Bean(db.Model):
@@ -87,6 +146,9 @@ class Bean(db.Model):
     notes = db.Column(db.Text)
 
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+
+    brews = db.relationship('Brew', backref='bean', lazy='dynamic')
+    roasts = db.relationship('Roast', backref='bean', lazy='dynamic')
 
     def bean_type_str(self):
         return BEAN_TYPES[self.bean_type]
