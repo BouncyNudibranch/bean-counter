@@ -136,6 +136,15 @@ class Roast(db.Model):
 
     brews = db.relationship('Brew', backref='roast', lazy='dynamic')
 
+    def roaster_machine_str(self):
+        return ROASTER_MACHINES[self.roaster_machine]
+
+    @staticmethod
+    def add_roast(roast, commit=True):
+        db.session.add(roast)
+        if commit:
+            db.session.commit()
+
 
 class Bean(db.Model):
     id = db.Column(db.Integer, primary_key=True)
