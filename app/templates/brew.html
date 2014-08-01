@@ -11,18 +11,18 @@
         {{ form.hidden_tag() }}
         <div class="form-group">
             <div class="col-md-6">
-                {{ labeled_input(form.bean_id) }}
-                {{ labeled_input(form.roast_batch) }}
-                {{ labeled_input(form.grind_size) }}
-                {{ labeled_input(form.bean_dose) }}
-                {{ labeled_input(form.water_dose) }}
+                {{ labeled_input(form.bean_id, 3, 9) }}
+                {{ labeled_input(form.roast_batch, 3, 9) }}
+                {{ labeled_input(form.grind_size, 3, 9) }}
+                {{ labeled_input(form.bean_dose, 3, 9) }}
+                {{ labeled_input(form.water_dose, 3, 9) }}
             </div>
             <div class="col-md-6">
-                {{ labeled_input(form.extraction_time) }}
-                {{ labeled_input(form.brew_method) }}
-                {{ labeled_input(form.filter_type) }}
-                {{ labeled_input(form.brew_date) }}
-                {{ labeled_input(form.notes) }}
+                {{ labeled_input(form.extraction_time, 3, 9) }}
+                {{ labeled_input(form.brew_method, 3, 9) }}
+                {{ labeled_input(form.filter_type, 3, 9) }}
+                {{ labeled_input(form.brew_date, 3, 9) }}
+                {{ labeled_input(form.notes, 3, 9) }}
             </div>
         </div>
         <div class="form-group">
