@@ -1,53 +1,119 @@
-{% for error in errors %}
-    <p>{{ error }}</p>
-{% endfor %}
-<form method="POST" action="{{ url_for('brew') }}">
-    {{ form.hidden_tag() }}
-    {{ form.bean_id.label }} {{ form.bean_id }} {{ form.bean_id.errors }}
-    {{ form.roast_batch.label }} {{ form.roast_batch }} {{ form.roast_batch.errors }}
-    {{ form.grind_size.label }} {{ form.grind_size }} {{ form.grind_size.errors }}
-    {{ form.bean_dose.label }} {{ form.bean_dose }} {{ form.bean_dose.errors }}
-    {{ form.water_dose.label }} {{ form.water_dose }} {{ form.water_dose.errors }}
-    {{ form.extraction_time.label }} {{ form.extraction_time }} {{ form.extraction_time.errors }}
-    {{ form.brew_method.label }} {{ form.brew_method }} {{ form.brew_method.errors }}
-    {{ form.filter_type.label }} {{ form.filter_type }} {{ form.filter_type.errors }}
-    {{ form.brew_date.label }} {{ form.brew_date }} {{ form.brew_date.errors }}
-    {{ form.notes.label }} {{ form.notes }} {{ form.notes.errors }}
-    <input type="submit" value="Go">
-</form>
-{% if past_brews %}
-    <table>
-        <tr>
-            <th>Brew Date</th>
-            <th>Bean</th>
-            <th>Grind Size</th>
-            <th>Brew Method</th>
-            <th>Bean Weight (grams)</th>
-            <th>Water Volume (mL)</th>
-            <th>Extraction Time (sec)</th>
-            <th>Filter Type</th>
-            <th>Roast Batch</th>
-            <th>Notes</th>
-        </tr>
-{% for brew in past_brews %}
-        <tr>
-            <td>{{ brew.brew_date }}</td>
-            <td><a href="#bean-{{ brew.bean.id }}">{{ brew.bean.name }}</a></td>
-            <td>{{ brew.grind_size_str() }}</td>
-            <td>{{ brew.brew_method_str() }}</td>
-            <td>{{ brew.bean_dose }}</td>
-            <td>{{ brew.water_dose }}</td>
-            <td>{{ brew.extraction_time }}</td>
-            <td>{{ brew.filter_type_str() }}</td>
-            <td>
-            {% if brew.roast is not none %}
-                <a href="#roast-{{ brew.roast.id }}">{{ brew.roast.roast_date }}</a>
-            {% else %}
-                N/A
-            {% endif %}
-            </td>
-            <td>{{ brew.notes }}</td>
-        </tr>
-{% endfor %}
-    </table>
-{% endif %}
+{% extends 'skeleton.html' %}
+{% block body %}
+<div class="container-fluid">
+    {% for error in errors %}
+        <p>{{ error }}</p>
+    {% endfor %}
+    <form class="form-horizontal" role="form" method="POST" action="{{ url_for('brew') }}">
+        {{ form.hidden_tag() }}
+        <div class="form-group">
+            <label class="col-md-2 control-label" for="{{ form.bean_id.id }}">{{ form.bean_id.label }}</label>
+            <div class="col-md-10">
+                {{ form.bean_id(class_='form-control') }}
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-2 control-label" for="{{ form.roast_batch.id }}">{{ form.roast_batch.label }}</label>
+            <div class="col-md-10">
+                {{ form.roast_batch(class_='form-control') }}
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-2 control-label" for="{{ form.grind_size.id }}">{{ form.grind_size.label }}</label>
+            <div class="col-md-10">
+                {{ form.grind_size(class_='form-control') }}
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-2 control-label" for="{{ form.bean_dose.id }}">{{ form.bean_dose.label }}</label>
+            <div class="col-md-10">
+                {{ form.bean_dose(class_='form-control') }}
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-2 control-label" for="{{ form.water_dose.id }}">{{ form.water_dose.label }}</label>
+            <div class="col-md-10">
+                {{ form.water_dose(class_='form-control') }}
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-2 control-label" for="{{ form.extraction_time.id }}">{{ form.extraction_time.label }}</label>
+            <div class="col-md-10">
+                {{ form.extraction_time(class_='form-control') }}
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-2 control-label" for="{{ form.brew_method.id }}">{{ form.brew_method.label }}</label>
+            <div class="col-md-10">
+                {{ form.brew_method(class_='form-control') }}
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-2 control-label" for="{{ form.filter_type.id }}">{{ form.filter_type.label }}</label>
+            <div class="col-md-10">
+                {{ form.filter_type(class_='form-control') }}
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-2 control-label" for="{{ form.brew_date.id }}">{{ form.brew_date.label }}</label>
+            <div class="col-md-10">
+                {{ form.brew_date(class_='form-control') }}
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-2 control-label" for="{{ form.notes.id }}">{{ form.notes.label }}</label>
+            <div class="col-md-10">
+                {{ form.notes(class_='form-control') }}
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <button type="submit" class="btn btn-default">Submit</button>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="container-fluid">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Your Latest Brews</h3>
+        </div>
+        <div class="panel-body">
+            <table class="table">
+                <tr>
+                    <th>Brew Date</th>
+                    <th>Bean</th>
+                    <th>Grind Size</th>
+                    <th>Brew Method</th>
+                    <th>Bean Weight (grams)</th>
+                    <th>Water Volume (mL)</th>
+                    <th>Extraction Time (sec)</th>
+                    <th>Filter Type</th>
+                    <th>Roast Batch</th>
+                    <th>Notes</th>
+                </tr>
+            {% for brew in past_brews %}
+                <tr>
+                    <td>{{ brew.brew_date }}</td>
+                    <td><a href="#bean-{{ brew.bean.id }}">{{ brew.bean.name }}</a></td>
+                    <td>{{ brew.grind_size_str() }}</td>
+                    <td>{{ brew.brew_method_str() }}</td>
+                    <td>{{ brew.bean_dose }}</td>
+                    <td>{{ brew.water_dose }}</td>
+                    <td>{{ brew.extraction_time }}</td>
+                    <td>{{ brew.filter_type_str() }}</td>
+                    <td>
+                    {% if brew.roast is not none %}
+                        <a href="#roast-{{ brew.roast.id }}">{{ brew.roast.roast_date }}</a>
+                    {% else %}
+                        N/A
+                    {% endif %}
+                    </td>
+                    <td>{{ brew.notes }}</td>
+                </tr>
+            {% endfor %}
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

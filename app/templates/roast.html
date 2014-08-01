@@ -1,76 +1,100 @@
-{% for error in errors %}
-    <p>{{ error }}</p>
-{% endfor %}
-<form method="POST" action="{{ url_for('roast') }}">
-    {{ form.hidden_tag() }}
-    {{ form.bean_id.label }} {{ form.bean_id }} {{ form.bean_id.errors }}
-    {{ form.roaster_machine.label }} {{ form.roaster_machine }} {{ form.roaster_machine.errors }}
-    {{ form.bean_dose.label }} {{ form.bean_dose }} {{ form.bean_dose.errors }}
-    {{ form.drop_temp.label }} {{ form.drop_temp }} {{ form.drop_temp.errors }}
-    {{ form.dry_end_time.label }} {{ form.dry_end_time }} {{ form.dry_end_time.errors }}
-    {{ form.dry_end_temp.label }} {{ form.dry_end_temp }} {{ form.dry_end_temp.errors }}
-    {{ form.fc_begin_time.label }} {{ form.fc_begin_time }} {{ form.fc_begin_time.errors }}
-    {{ form.fc_begin_temp.label }} {{ form.fc_begin_temp }} {{ form.fc_begin_temp.errors }}
-    {{ form.fc_end_time.label }} {{ form.fc_end_time }} {{ form.fc_end_time.errors }}
-    {{ form.fc_end_temp.label }} {{ form.fc_end_temp }} {{ form.fc_end_temp.errors }}
-    {{ form.sc_begin_time.label }} {{ form.sc_begin_time }} {{ form.sc_begin_time.errors }}
-    {{ form.sc_begin_temp.label }} {{ form.sc_begin_temp }} {{ form.sc_begin_temp.errors }}
-    {{ form.sc_end_time.label }} {{ form.sc_end_time }} {{ form.sc_end_time.errors }}
-    {{ form.sc_end_temp.label }} {{ form.sc_end_temp }} {{ form.sc_end_temp.errors }}
-    {{ form.end_time.label }} {{ form.end_time }} {{ form.end_time.errors }}
-    {{ form.end_temp.label }} {{ form.end_temp }} {{ form.end_temp.errors }}
-    {{ form.end_weight.label }} {{ form.end_weight }} {{ form.end_weight.errors }}
-    {{ form.roast_date.label }} {{ form.roast_date }} {{ form.roast_date.errors }}
-    {{ form.notes.label }} {{ form.notes }} {{ form.notes.errors }}
-    <input type="submit" value="Go">
-</form>
-<table>
-    <tr>
-        <th>Roast Date</th>
-        <th>Bean</th>
-        <th>Roaster</th>
-        <th>Bean Weight (grams)</th>
-        <th>Drop Temp (F)</th>
-        <th>Dry Phase End Time (sec)</th>
-        <th>Dry Phase End Temp (F)</th>
-        <th>First Crack Begin Time (sec)</th>
-        <th>First Crack Begin Temp (F)</th>
-        <th>First Crack End Time (sec)</th>
-        <th>First Crack End Temp (F)</th>
-        <th>Second Crack Begin Time (sec)</th>
-        <th>Second Crack Begin Temp (F)</th>
-        <th>Second Crack End Time (sec)</th>
-        <th>Second Crack End Temp (F)</th>
-        <th>End Time (sec)</th>
-        <th>End Temp (F)</th>
-        <th>Roasted Weight (grams)</th>
-        <th>Notes</th>
-    </tr>
-{% for roast in past_roasts %}
-    <tr>
-        <td>{{ roast.roast_date }}</td>
-        <td><a href="#bean-{{ roast.bean.id }}">{{ roast.bean.name }}</a></td>
-        <td>{{ roast.roaster_machine_str() }}</td>
-        <td>{{ roast.bean_dose }}</td>
-        <td>{{ roast.drop_temp }}</td>
-        <td>{{ roast.dry_end_time }}</td>
-        <td>{{ roast.dry_end_temp }}</td>
-        <td>{{ roast.fc_begin_time }}</td>
-        <td>{{ roast.fc_begin_temp }}</td>
-        <td>{{ roast.fc_end_time }}</td>
-        <td>{{ roast.fc_end_temp }}</td>
-        <td>{{ roast.sc_begin_time }}</td>
-        <td>{{ roast.sc_begin_temp }}</td>
-        <td>{{ roast.sc_end_time }}</td>
-        <td>{{ roast.sc_end_temp }}</td>
-        <td>{{ roast.end_time }}</td>
-        <td>{{ roast.end_temp }}</td>
-        <td>{{ roast.end_weight }}</td>
-        <td>{{ roast.notes }}</td>
-    </tr>
-{% else %}
-    <tr>
-        <td>You don't have any roasts yet.</td>
-    </tr>
-{% endfor %}
-</table>
+{% extends 'skeleton.html' %}
+
+{% macro labeled_input(field) -%}
+    <div class="form-group">
+            <label class="col-md-2 control-label" for="{{ field.id }}">{{ field.label }}</label>
+            <div class="col-md-10">
+                {{ field(class_='form-control') }}
+            </div>
+    </div>
+{%- endmacro %}
+
+{% block body %}
+<div class="container-fluid">
+    {% for error in errors %}
+        <p>{{ error }}</p>
+    {% endfor %}
+    <form class="form-horizontal" role="form" method="POST" action="{{ url_for('roast') }}">
+        {{ form.hidden_tag() }}
+        {{ labeled_input(form.bean_id) }}
+        {{ labeled_input(form.roaster_machine) }}
+        {{ labeled_input(form.bean_dose) }}
+        {{ labeled_input(form.drop_temp) }}
+        {{ labeled_input(form.dry_end_time) }}
+        {{ labeled_input(form.dry_end_temp) }}
+        {{ labeled_input(form.fc_begin_time) }}
+        {{ labeled_input(form.fc_begin_temp) }}
+        {{ labeled_input(form.fc_end_time) }}
+        {{ labeled_input(form.fc_end_temp) }}
+        {{ labeled_input(form.sc_begin_time) }}
+        {{ labeled_input(form.sc_begin_temp) }}
+        {{ labeled_input(form.sc_end_time) }}
+        {{ labeled_input(form.sc_end_temp) }}
+        {{ labeled_input(form.end_time) }}
+        {{ labeled_input(form.end_temp) }}
+        {{ labeled_input(form.end_weight) }}
+        {{ labeled_input(form.roast_date) }}
+        {{ labeled_input(form.notes) }}
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <button type="submit" class="btn btn-default">Submit</button>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="container-fluid">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Your Latest Roasts</h3>
+        </div>
+        <div class="panel-body">
+            <table class="table">
+                <tr>
+                    <th>Roast Date</th>
+                    <th>Bean</th>
+                    <th>Roaster</th>
+                    <th>Bean Weight (grams)</th>
+                    <th>Drop Temp (F)</th>
+                    <th>Dry Phase End Time (sec)</th>
+                    <th>Dry Phase End Temp (F)</th>
+                    <th>First Crack Begin Time (sec)</th>
+                    <th>First Crack Begin Temp (F)</th>
+                    <th>First Crack End Time (sec)</th>
+                    <th>First Crack End Temp (F)</th>
+                    <th>Second Crack Begin Time (sec)</th>
+                    <th>Second Crack Begin Temp (F)</th>
+                    <th>Second Crack End Time (sec)</th>
+                    <th>Second Crack End Temp (F)</th>
+                    <th>End Time (sec)</th>
+                    <th>End Temp (F)</th>
+                    <th>Roasted Weight (grams)</th>
+                    <th>Notes</th>
+                </tr>
+            {% for roast in past_roasts %}
+                <tr>
+                    <td>{{ roast.roast_date }}</td>
+                    <td><a href="#bean-{{ roast.bean.id }}">{{ roast.bean.name }}</a></td>
+                    <td>{{ roast.roaster_machine_str() }}</td>
+                    <td>{{ roast.bean_dose }}</td>
+                    <td>{{ roast.drop_temp }}</td>
+                    <td>{{ roast.dry_end_time }}</td>
+                    <td>{{ roast.dry_end_temp }}</td>
+                    <td>{{ roast.fc_begin_time }}</td>
+                    <td>{{ roast.fc_begin_temp }}</td>
+                    <td>{{ roast.fc_end_time }}</td>
+                    <td>{{ roast.fc_end_temp }}</td>
+                    <td>{{ roast.sc_begin_time }}</td>
+                    <td>{{ roast.sc_begin_temp }}</td>
+                    <td>{{ roast.sc_end_time }}</td>
+                    <td>{{ roast.sc_end_temp }}</td>
+                    <td>{{ roast.end_time }}</td>
+                    <td>{{ roast.end_temp }}</td>
+                    <td>{{ roast.end_weight }}</td>
+                    <td>{{ roast.notes }}</td>
+                </tr>
+            {% endfor %}
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

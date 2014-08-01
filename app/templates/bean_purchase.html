@@ -1,32 +1,73 @@
-{% for error in errors %}
-    <p>{{ error }}</p>
-{% endfor %}
-<form method="POST" action="{{ url_for('bean_purchase') }}">
-    {{ form.hidden_tag() }}
-    {{ form.name.label }} {{ form.name }} {{ form.name.errors }}
-    {{ form.type.label }} {{ form.type }} {{ form.type.errors }}
-    {{ form.weight.label }} {{ form.weight }} {{ form.weight.errors }}
-    {{ form.purchase_date.label }} {{ form.purchase_date }} {{ form.purchase_date.errors }}
-    {{ form.notes.label }} {{ form.notes }} {{ form.notes.errors }}
-    <input type="submit" value="Go">
-</form>
-{% if bean_purchases %}
-    <table>
-        <tr>
-            <th>Purchase Date</th>
-            <th>Bean Type</th>
-            <th>Bean Name</th>
-            <th>Weight (grams)</th>
-            <th>Notes</th>
-        </tr>
-{% for purchase in bean_purchases %}
-        <tr>
-            <td>{{ purchase.purchase_date }}</td>
-            <td>{{ purchase.bean_type_str() }}</td>
-            <td>{{ purchase.name }}</td>
-            <td>{{ purchase.weight }}</td>
-            <td>{{ purchase.notes }}</td>
-        </tr>
-{% endfor %}
-    </table>
-{% endif %}
+{% extends 'skeleton.html' %}
+{% block body %}
+<div class="container-fluid">
+    {% for error in errors %}
+        <p>{{ error }}</p>
+    {% endfor %}
+    <form class="form-horizontal" role="form" method="POST" action="{{ url_for('bean_purchase') }}">
+        {{ form.hidden_tag() }}
+        <div class="form-group">
+            <label class="col-md-2 control-label" for="{{ form.name.id }}">{{ form.name.label }}</label>
+            <div class="col-md-10">
+                {{ form.name(class_='form-control') }}
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-2 control-label" for="{{ form.type.id }}">{{ form.type.label }}</label>
+            <div class="col-md-10">
+                {{ form.type(class_='form-control') }}
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-2 control-label" for="{{ form.weight.id }}">{{ form.weight.label }}</label>
+            <div class="col-md-10">
+                {{ form.weight(class_='form-control') }}
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-2 control-label" for="{{ form.purchase_date.id }}">{{ form.purchase_date.label }}</label>
+            <div class="col-md-10">
+                {{ form.purchase_date(class_='form-control') }}
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-2 control-label" for="{{ form.notes.id }}">{{ form.notes.label }}</label>
+            <div class="col-md-10">
+                {{ form.notes(class_='form-control') }}
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <button type="submit" class="btn btn-default">Submit</button>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="container-fluid">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Your Latest Bean Purchases</h3>
+        </div>
+        <div class="panel-body">
+            <table class="table">
+                <tr>
+                    <th>Purchase Date</th>
+                    <th>Bean Type</th>
+                    <th>Bean Name</th>
+                    <th>Weight (grams)</th>
+                    <th>Notes</th>
+                </tr>
+            {% for purchase in bean_purchases %}
+                <tr>
+                    <td>{{ purchase.purchase_date }}</td>
+                    <td>{{ purchase.bean_type_str() }}</td>
+                    <td>{{ purchase.name }}</td>
+                    <td>{{ purchase.weight }}</td>
+                    <td>{{ purchase.notes }}</td>
+                </tr>
+            {% endfor %}
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
