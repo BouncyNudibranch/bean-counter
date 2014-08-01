@@ -1,0 +1,17 @@
+{% macro labeled_input(field) -%}
+    <div class="form-group">
+            <label class="col-md-2 control-label" for="{{ field.id }}">{{ field.label }}</label>
+            <div class="col-md-10">
+                {{ field(class_='form-control') }}
+            </div>
+    </div>
+    {% if field.errors %}
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+            {% for error in field.errors %}
+                <p class="input_error">{{ error }}</p>
+            {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+{%- endmacro %}

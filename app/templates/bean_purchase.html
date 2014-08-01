@@ -1,13 +1,6 @@
 {% extends 'skeleton.html' %}
 
-{% macro labeled_input(field) -%}
-    <div class="form-group">
-            <label class="col-md-2 control-label" for="{{ field.id }}">{{ field.label }}</label>
-            <div class="col-md-10">
-                {{ field(class_='form-control') }}
-            </div>
-    </div>
-{%- endmacro %}
+{% from 'forms_util.html' import labeled_input %}
 
 {% block body %}
 <div class="container-fluid">
