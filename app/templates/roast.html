@@ -51,6 +51,7 @@
         <div class="panel-body">
             <table class="table">
                 <tr>
+                    <th></th>
                     <th>Roast Date</th>
                     <th>Bean</th>
                     <th>Roaster</th>
@@ -73,6 +74,18 @@
                 </tr>
             {% for roast in past_roasts %}
                 <tr>
+                    <td>
+                         <div class="btn-group">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="#">Edit</a></li>
+                                <li><a href="#">Delete</a></li>
+                                <li><a href="#">View Details</a></li>
+                            </ul>
+                        </div>
+                    </td>
                     <td>{{ roast.roast_date }}</td>
                     <td><a href="#bean-{{ roast.bean.id }}">{{ roast.bean.name }}</a></td>
                     <td>{{ roast.roaster_machine_str() }}</td>
