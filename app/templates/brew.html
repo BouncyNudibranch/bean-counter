@@ -1,4 +1,14 @@
 {% extends 'skeleton.html' %}
+
+{% macro labeled_input(field) -%}
+    <div class="form-group">
+            <label class="col-md-2 control-label" for="{{ field.id }}">{{ field.label }}</label>
+            <div class="col-md-10">
+                {{ field(class_='form-control') }}
+            </div>
+    </div>
+{%- endmacro %}
+
 {% block body %}
 <div class="container-fluid">
     {% for error in errors %}
@@ -6,66 +16,16 @@
     {% endfor %}
     <form class="form-horizontal" role="form" method="POST" action="{{ url_for('brew') }}">
         {{ form.hidden_tag() }}
-        <div class="form-group">
-            <label class="col-md-2 control-label" for="{{ form.bean_id.id }}">{{ form.bean_id.label }}</label>
-            <div class="col-md-10">
-                {{ form.bean_id(class_='form-control') }}
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-md-2 control-label" for="{{ form.roast_batch.id }}">{{ form.roast_batch.label }}</label>
-            <div class="col-md-10">
-                {{ form.roast_batch(class_='form-control') }}
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-md-2 control-label" for="{{ form.grind_size.id }}">{{ form.grind_size.label }}</label>
-            <div class="col-md-10">
-                {{ form.grind_size(class_='form-control') }}
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-md-2 control-label" for="{{ form.bean_dose.id }}">{{ form.bean_dose.label }}</label>
-            <div class="col-md-10">
-                {{ form.bean_dose(class_='form-control') }}
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-md-2 control-label" for="{{ form.water_dose.id }}">{{ form.water_dose.label }}</label>
-            <div class="col-md-10">
-                {{ form.water_dose(class_='form-control') }}
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-md-2 control-label" for="{{ form.extraction_time.id }}">{{ form.extraction_time.label }}</label>
-            <div class="col-md-10">
-                {{ form.extraction_time(class_='form-control') }}
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-md-2 control-label" for="{{ form.brew_method.id }}">{{ form.brew_method.label }}</label>
-            <div class="col-md-10">
-                {{ form.brew_method(class_='form-control') }}
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-md-2 control-label" for="{{ form.filter_type.id }}">{{ form.filter_type.label }}</label>
-            <div class="col-md-10">
-                {{ form.filter_type(class_='form-control') }}
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-md-2 control-label" for="{{ form.brew_date.id }}">{{ form.brew_date.label }}</label>
-            <div class="col-md-10">
-                {{ form.brew_date(class_='form-control') }}
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-md-2 control-label" for="{{ form.notes.id }}">{{ form.notes.label }}</label>
-            <div class="col-md-10">
-                {{ form.notes(class_='form-control') }}
-            </div>
-        </div>
+        {{ labeled_input(form.bean_id) }}
+        {{ labeled_input(form.roast_batch) }}
+        {{ labeled_input(form.grind_size) }}
+        {{ labeled_input(form.bean_dose) }}
+        {{ labeled_input(form.water_dose) }}
+        {{ labeled_input(form.extraction_time) }}
+        {{ labeled_input(form.brew_method) }}
+        {{ labeled_input(form.filter_type) }}
+        {{ labeled_input(form.brew_date) }}
+        {{ labeled_input(form.notes) }}
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <button type="submit" class="btn btn-default">Submit</button>

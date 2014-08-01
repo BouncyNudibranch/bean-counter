@@ -1,4 +1,14 @@
 {% extends 'skeleton.html' %}
+
+{% macro labeled_input(field) -%}
+    <div class="form-group">
+            <label class="col-md-2 control-label" for="{{ field.id }}">{{ field.label }}</label>
+            <div class="col-md-10">
+                {{ field(class_='form-control') }}
+            </div>
+    </div>
+{%- endmacro %}
+
 {% block body %}
 <div class="container-fluid">
     {% for error in errors %}
@@ -6,36 +16,11 @@
     {% endfor %}
     <form class="form-horizontal" role="form" method="POST" action="{{ url_for('bean_purchase') }}">
         {{ form.hidden_tag() }}
-        <div class="form-group">
-            <label class="col-md-2 control-label" for="{{ form.name.id }}">{{ form.name.label }}</label>
-            <div class="col-md-10">
-                {{ form.name(class_='form-control') }}
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-md-2 control-label" for="{{ form.type.id }}">{{ form.type.label }}</label>
-            <div class="col-md-10">
-                {{ form.type(class_='form-control') }}
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-md-2 control-label" for="{{ form.weight.id }}">{{ form.weight.label }}</label>
-            <div class="col-md-10">
-                {{ form.weight(class_='form-control') }}
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-md-2 control-label" for="{{ form.purchase_date.id }}">{{ form.purchase_date.label }}</label>
-            <div class="col-md-10">
-                {{ form.purchase_date(class_='form-control') }}
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-md-2 control-label" for="{{ form.notes.id }}">{{ form.notes.label }}</label>
-            <div class="col-md-10">
-                {{ form.notes(class_='form-control') }}
-            </div>
-        </div>
+        {{ labeled_input(form.name) }}
+        {{ labeled_input(form.type) }}
+        {{ labeled_input(form.weight) }}
+        {{ labeled_input(form.purchase_date) }}
+        {{ labeled_input(form.notes) }}
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <button type="submit" class="btn btn-default">Submit</button>
