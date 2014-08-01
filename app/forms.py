@@ -20,15 +20,15 @@ class RegisterForm(Form):
 class BeanPurchaseForm(Form):
     name = StringField('Bean Name', validators=[DataRequired()])
     type = SelectField('Bean Type', choices=[(c, BEAN_TYPES[c]) for c in BEAN_TYPES],
-                       coerce=int, validators=[DataRequired()])
-    weight = IntegerField('Weight (grams)', validators=[DataRequired()])
+                       coerce=int, validators=[NumberRange(min=0)])
+    weight = IntegerField('Weight (grams)', validators=[NumberRange(min=0)])
     purchase_date = DateField('Purchase Date', validators=[DataRequired()], default=date.today())
     notes = TextAreaField('Notes', validators=[Optional()])
 
 
 class BrewForm(Form):
     grind_size = SelectField('Grind Size', choices=[(g, GRIND_SIZES[g]) for g in GRIND_SIZES],
-                             coerce=int, validators=[DataRequired()])
+                             coerce=int, validators=[NumberRange(min=0)])
     bean_dose = IntegerField('Bean Weight (grams)', validators=[NumberRange(min=0)])
     water_dose = IntegerField('Water Volume (mL)', validators=[NumberRange(min=0)])
     extraction_time = IntegerField('Extraction Time (sec)', validators=[NumberRange(min=0)])
