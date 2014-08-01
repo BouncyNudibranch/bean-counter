@@ -1,38 +1,22 @@
 {% extends 'skeleton.html' %}
 
-{% from 'forms_util.html' import labeled_input %}
+{% from 'lists_util.html' import page_nav %}
 
 {% block body %}
 <div class="container-fluid">
-    {% for error in errors %}
-        <p>{{ error }}</p>
-    {% endfor %}
-    <form class="form-horizontal" role="form" method="POST" action="{{ url_for('bean_purchase') }}">
-        {{ form.hidden_tag() }}
-        <div class="form-group">
-            <div class="col-md-6">
-                {{ labeled_input(form.name) }}
-                {{ labeled_input(form.type) }}
-                {{ labeled_input(form.weight) }}
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="pull-right">
+                {{ page_nav(beans, 'bean_list') }}
             </div>
-            <div class="col-md-6">
-                {{ labeled_input(form.purchase_date) }}
-                {{ labeled_input(form.notes) }}
-            </div>
+            <a class="btn btn-default pull-left" href="{{ url_for('bean_add') }}">
+                <span class="glyphicon glyphicon-plus"></span>
+                Add Bean
+            </a>
         </div>
-        <div class="form-group">
-            <div class="col-md-offset-4 col-md-4">
-                <button type="submit" class="btn btn-default btn-block">Submit</button>
-            </div>
-        </div>
-    </form>
-</div>
-<div class="container-fluid">
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="panel-title">Your Latest Bean Purchases</h3>
-        </div>
-        <div class="panel-body">
+    </div>
+    <div class="row top_margin_15">
+        <div class="col-sm-12">
             <table class="table">
                 <tr>
                     <th></th>
@@ -42,7 +26,7 @@
                     <th>Weight (grams)</th>
                     <th>Notes</th>
                 </tr>
-            {% for purchase in bean_purchases %}
+            {% for purchase in beans.items %}
                 <tr>
                     <td>
                         <div class="btn-group">
@@ -64,6 +48,9 @@
                 </tr>
             {% endfor %}
             </table>
+            <div class="pull-right">
+                {{ page_nav(beans, 'bean_list') }}
+            </div>
         </div>
     </div>
 </div>

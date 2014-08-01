@@ -1,0 +1,35 @@
+{% extends 'skeleton.html' %}
+
+{% from 'forms_util.html' import labeled_input %}
+
+{% block body %}
+<div class="container-fluid">
+    {% for error in errors %}
+        <p>{{ error }}</p>
+    {% endfor %}
+    <form class="form-horizontal" role="form" method="POST" action="{{ url_for('brew_add') }}">
+        {{ form.hidden_tag() }}
+        <div class="form-group">
+            <div class="col-md-6">
+                {{ labeled_input(form.bean_id, 3, 9) }}
+                {{ labeled_input(form.roast_batch, 3, 9) }}
+                {{ labeled_input(form.grind_size, 3, 9) }}
+                {{ labeled_input(form.bean_dose, 3, 9) }}
+                {{ labeled_input(form.water_dose, 3, 9) }}
+            </div>
+            <div class="col-md-6">
+                {{ labeled_input(form.extraction_time, 3, 9) }}
+                {{ labeled_input(form.brew_method, 3, 9) }}
+                {{ labeled_input(form.filter_type, 3, 9) }}
+                {{ labeled_input(form.brew_date, 3, 9) }}
+                {{ labeled_input(form.notes, 3, 9) }}
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-4 col-md-4">
+                <button type="submit" class="btn btn-default btn-block">Submit</button>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}

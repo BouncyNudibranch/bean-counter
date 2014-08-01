@@ -1,6 +1,6 @@
 from flask import render_template, redirect, g, request, url_for
 from flask_login import current_user, login_user, logout_user, login_required
-
+from config import BEANS_PER_PAGE, BREWS_PER_PAGE, ROASTS_PER_PAGE
 from app import app, db, login_manager
 from app.models import User, Bean, Brew, Roast
 from app.forms import LoginForm, RegisterForm, BeanPurchaseForm, BrewForm, RoastForm
@@ -68,9 +68,9 @@ def logout():
     return redirect(url_for('home'))
 
 
-@app.route('/bean_purchase', methods=['GET', 'POST'])
+@app.route('/bean/add', methods=['GET', 'POST'])
 @login_required
-def bean_purchase():
+def bean_add():
     form = BeanPurchaseForm()
     user = g.user
     if form.validate_on_submit():
@@ -79,13 +79,22 @@ def bean_purchase():
             weight=form.weight.data, purchase_date=form.purchase_date.data,
             notes=form.notes.data, user_id=user.id)
         Bean.add_bean(bean)
-    bean_purchases = Bean.query.filter_by(user_id=user.id).order_by(Bean.purchase_date.desc()).limit(10).all()
-    return render_template('bean_purchase.html', form=form, bean_purchases=bean_purchases)
+    return render_template('bean_add.html', form=form)
 
 
-@app.route('/brew', methods=['GET', 'POST'])
+@app.route('/bean/list')
+@app.route('/bean/list/<int:page>')
 @login_required
-def brew():
+def bean_list(page=1):
+    user = g.user
+    beans = Bean.query.filter_by(user_id=user.id).order_by(Bean.purchase_date.desc()).paginate(
+        page, BEANS_PER_PAGE, False)
+    return render_template('bean_list.html', beans=beans)
+
+
+@app.route('/brew/add', methods=['GET', 'POST'])
+@login_required
+def brew_add():
     user = g.user
     form = BrewForm()
     form.roast_batch.choices = [(r.id, '%s - %s' % (r.roast_date, r.bean.name)) for r in Roast.query.filter_by(
@@ -103,13 +112,21 @@ def brew():
         if form.roast_batch.data != 0:
             _brew.roast_id = form.roast_batch.data
         Brew.add_brew(_brew)
-    past_brews = Brew.query.filter_by(user_id=user.id).order_by(Brew.brew_date.desc()).limit(10).all()
-    return render_template('brew.html', form=form, past_brews=past_brews)
+    return render_template('brew_add.html', form=form)
 
 
-@app.route('/roast', methods=['GET', 'POST'])
+@app.route('/brew/list')
+@app.route('/brew/list/<int:page>')
 @login_required
-def roast():
+def brew_list(page=1):
+    user = g.user
+    brews = Brew.query.filter_by(user_id=user.id).order_by(Brew.brew_date.desc()).paginate(page, BREWS_PER_PAGE, False)
+    return render_template('brew_list.html', brews=brews)
+
+
+@app.route('/roast/add', methods=['GET', 'POST'])
+@login_required
+def roast_add():
     user = g.user
     form = RoastForm()
     form.bean_id.choices = [(b.id, '%s - %s (%dg)' % (b.purchase_date, b.name, b.weight)) for b in Bean.query.filter_by(
@@ -125,5 +142,14 @@ def roast():
             roast_date=form.roast_date.data, notes=form.notes.data, bean_id=form.bean_id.data, user_id=user.id
         )
         Roast.add_roast(_roast)
-    past_roasts = Roast.query.filter_by(user_id=user.id).order_by(Roast.roast_date.desc()).limit(10).all()
-    return render_template('roast.html', form=form, past_roasts=past_roasts)
+    return render_template('roast_add.html', form=form)
+
+
+@app.route('/roast/list')
+@app.route('/roast/list/<int:page>')
+@login_required
+def roast_list(page=1):
+    user = g.user
+    roasts = Roast.query.filter_by(user_id=user.id).order_by(Roast.roast_date.desc()).paginate(
+        page, ROASTS_PER_PAGE, False)
+    return render_template('roast_list.html', roasts=roasts)

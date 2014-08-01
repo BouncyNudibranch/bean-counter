@@ -1,0 +1,27 @@
+{% extends 'skeleton.html' %}
+
+{% from 'forms_util.html' import labeled_input %}
+
+{% block body %}
+<div class="container-fluid">
+    <form class="form-horizontal" role="form" method="POST" action="{{ url_for('bean_add') }}">
+        {{ form.hidden_tag() }}
+        <div class="form-group">
+            <div class="col-md-6">
+                {{ labeled_input(form.name) }}
+                {{ labeled_input(form.type) }}
+                {{ labeled_input(form.weight) }}
+            </div>
+            <div class="col-md-6">
+                {{ labeled_input(form.purchase_date) }}
+                {{ labeled_input(form.notes) }}
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-4 col-md-4">
+                <button type="submit" class="btn btn-default btn-block">Submit</button>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}
