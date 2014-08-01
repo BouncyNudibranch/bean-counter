@@ -9,28 +9,36 @@
     {% endfor %}
     <form class="form-horizontal" role="form" method="POST" action="{{ url_for('roast') }}">
         {{ form.hidden_tag() }}
-        {{ labeled_input(form.bean_id) }}
-        {{ labeled_input(form.roaster_machine) }}
-        {{ labeled_input(form.bean_dose) }}
-        {{ labeled_input(form.drop_temp) }}
-        {{ labeled_input(form.dry_end_time) }}
-        {{ labeled_input(form.dry_end_temp) }}
-        {{ labeled_input(form.fc_begin_time) }}
-        {{ labeled_input(form.fc_begin_temp) }}
-        {{ labeled_input(form.fc_end_time) }}
-        {{ labeled_input(form.fc_end_temp) }}
-        {{ labeled_input(form.sc_begin_time) }}
-        {{ labeled_input(form.sc_begin_temp) }}
-        {{ labeled_input(form.sc_end_time) }}
-        {{ labeled_input(form.sc_end_temp) }}
-        {{ labeled_input(form.end_time) }}
-        {{ labeled_input(form.end_temp) }}
-        {{ labeled_input(form.end_weight) }}
-        {{ labeled_input(form.roast_date) }}
-        {{ labeled_input(form.notes) }}
         <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <button type="submit" class="btn btn-default">Submit</button>
+            <div class="col-md-4">
+                {{ labeled_input(form.bean_id, 4, 8) }}
+                {{ labeled_input(form.roaster_machine, 4, 8) }}
+                {{ labeled_input(form.bean_dose, 4, 8) }}
+                {{ labeled_input(form.drop_temp, 4, 8) }}
+                {{ labeled_input(form.dry_end_time, 4, 8) }}
+                {{ labeled_input(form.dry_end_temp, 4, 8) }}
+                {{ labeled_input(form.fc_begin_time, 4, 8) }}
+            </div>
+            <div class="col-md-4">
+                {{ labeled_input(form.fc_begin_temp, 4, 8) }}
+                {{ labeled_input(form.fc_end_time, 4, 8) }}
+                {{ labeled_input(form.fc_end_temp, 4, 8) }}
+                {{ labeled_input(form.sc_begin_time, 4, 8) }}
+                {{ labeled_input(form.sc_begin_temp, 4, 8) }}
+                {{ labeled_input(form.sc_end_time, 4, 8) }}
+            </div>
+            <div class="col-md-4">
+                {{ labeled_input(form.sc_end_temp, 4, 8) }}
+                {{ labeled_input(form.end_time, 4, 8) }}
+                {{ labeled_input(form.end_temp, 4, 8) }}
+                {{ labeled_input(form.end_weight, 4, 8) }}
+                {{ labeled_input(form.roast_date, 4, 8) }}
+                {{ labeled_input(form.notes, 4, 8) }}
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-4 col-md-4">
+                <button type="submit" class="btn btn-default btn-block">Submit</button>
             </div>
         </div>
     </form>

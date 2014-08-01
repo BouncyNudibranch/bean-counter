@@ -1,13 +1,13 @@
-{% macro labeled_input(field) -%}
+{% macro labeled_input(field, label_size=2, input_size=10) -%}
     <div class="form-group">
-            <label class="col-md-2 control-label" for="{{ field.id }}">{{ field.label }}</label>
-            <div class="col-md-10">
+            <label class="col-md-{{ label_size }} control-label" for="{{ field.id }}">{{ field.label }}</label>
+            <div class="col-md-{{ input_size }}">
                 {{ field(class_='form-control') }}
             </div>
     </div>
     {% if field.errors %}
         <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
+            <div class="col-md-offset-{{ label_size }} col-md-{{ input_size }}">
             {% for error in field.errors %}
                 <p class="input_error">{{ error }}</p>
             {% endfor %}
