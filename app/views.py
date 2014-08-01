@@ -67,6 +67,7 @@ def bean_add():
             weight=form.weight.data, purchase_date=form.purchase_date.data,
             notes=form.notes.data, user_id=user.id)
         Bean.add_bean(bean)
+        return redirect(url_for('bean_list'))
     return render_template('bean_add.html', form=form)
 
 
@@ -100,6 +101,7 @@ def brew_add():
         if form.roast_batch.data != 0:
             _brew.roast_id = form.roast_batch.data
         Brew.add_brew(_brew)
+        return redirect(url_for('brew_list'))
     return render_template('brew_add.html', form=form)
 
 
@@ -130,6 +132,7 @@ def roast_add():
             roast_date=form.roast_date.data, notes=form.notes.data, bean_id=form.bean_id.data, user_id=user.id
         )
         Roast.add_roast(_roast)
+        return redirect(url_for('roast_list'))
     return render_template('roast_add.html', form=form)
 
 
