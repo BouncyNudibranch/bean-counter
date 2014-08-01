@@ -26,20 +26,13 @@ def login():
     if g.user is not None and g.user.is_authenticated():
         return redirect(url_for('home'))
     form = LoginForm()
-    errors = []
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
         if user is not None:
             if user.verify_password(form.password.data):
                 login_user(user)
                 return redirect(url_for('home'))
-            else:
-                errors.append('Invalid password!')
-        else:
-            errors.append('Invalid username!')
-    else:
-        errors.append('Please complete the form!')
-    return render_template('login.html', form=form, errors=errors)
+    return render_template('login.html', form=form)
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -47,7 +40,6 @@ def register():
     if g.user is not None and g.user.is_authenticated():
         return redirect(url_for('home'))
     form = RegisterForm()
-    errors = []
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
         if user is None:
@@ -55,11 +47,7 @@ def register():
             User.add_user(user)
             login_user(user)
             return redirect(url_for('home'))
-        else:
-            errors.append('Username already exists!')
-    else:
-        errors.append('Please complete the form!')
-    return render_template('register.html', form=form, errors=errors)
+    return render_template('register.html', form=form)
 
 
 @app.route('/logout')
