@@ -18,7 +18,7 @@ def before_request():
 
 @app.route('/')
 def home():
-    return render_template('skeleton.html')
+    return render_template('home.html')
 
 
 @app.route('/login', methods=['GET', 'POST'])
