@@ -1,3 +1,20 @@
+@import url(http://fonts.googleapis.com/css?family=Oswald|Pacifico);
+
+body {
+    background: #F6EEEA;
+    font-family: "Oswald";
+}
+
+img {
+    border: 0px solid #000;
+    border-radius: 30px;
+}
+
+.navbar-brand {
+    font-family: "Pacifico";
+    font-size: 20px;
+}
+
 .input_error {
     color: #FF0000;
     margin: 0;
@@ -6,3 +23,5 @@
 .top_margin_15 {
     margin-top: 15px;
 }
+
+
