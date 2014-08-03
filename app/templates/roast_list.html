@@ -23,22 +23,6 @@
                     <th>Roast Date</th>
                     <th>Bean</th>
                     <th>Roaster</th>
-                    <th>Bean Weight (grams)</th>
-                    <th>Drop Temp (F)</th>
-                    <th>Dry Phase End Time (sec)</th>
-                    <th>Dry Phase End Temp (F)</th>
-                    <th>First Crack Begin Time (sec)</th>
-                    <th>First Crack Begin Temp (F)</th>
-                    <th>First Crack End Time (sec)</th>
-                    <th>First Crack End Temp (F)</th>
-                    <th>Second Crack Begin Time (sec)</th>
-                    <th>Second Crack Begin Temp (F)</th>
-                    <th>Second Crack End Time (sec)</th>
-                    <th>Second Crack End Temp (F)</th>
-                    <th>End Time (sec)</th>
-                    <th>End Temp (F)</th>
-                    <th>Roasted Weight (grams)</th>
-                    <th>Notes</th>
                 </tr>
             {% for roast in roasts.items %}
                 <tr>
@@ -57,22 +41,6 @@
                     <td>{{ roast.roast_date }}</td>
                     <td><a href="#bean-{{ roast.bean.id }}">{{ roast.bean.name }}</a></td>
                     <td>{{ roast.roaster_machine_str() }}</td>
-                    <td>{{ roast.bean_dose }}</td>
-                    <td>{{ roast.drop_temp }}</td>
-                    <td>{{ roast.dry_end_time }}</td>
-                    <td>{{ roast.dry_end_temp }}</td>
-                    <td>{{ roast.fc_begin_time }}</td>
-                    <td>{{ roast.fc_begin_temp }}</td>
-                    <td>{{ roast.fc_end_time }}</td>
-                    <td>{{ roast.fc_end_temp }}</td>
-                    <td>{{ roast.sc_begin_time }}</td>
-                    <td>{{ roast.sc_begin_temp }}</td>
-                    <td>{{ roast.sc_end_time }}</td>
-                    <td>{{ roast.sc_end_temp }}</td>
-                    <td>{{ roast.end_time }}</td>
-                    <td>{{ roast.end_temp }}</td>
-                    <td>{{ roast.end_weight }}</td>
-                    <td>{{ roast.notes }}</td>
                 </tr>
             {% endfor %}
             </table>
