@@ -24,4 +24,9 @@ img {
     margin-top: 15px;
 }
 
+.table_label {
+    font-weight: bold;
+    text-align: right;
+}
+
 

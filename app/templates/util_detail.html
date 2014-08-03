@@ -1,0 +1,6 @@
+{% macro horizontal_table_column(label, value) -%}
+<div class="row">
+    <div class="col-xs-6"><p class="table_label">{{ label }}</p></div>
+    <div class="col-xs-6"><p class="table_value">{{ value }}</p></div>
+</div>
+{%- endmacro %}

@@ -99,6 +99,13 @@ def bean_list(page=1):
     return render_template('bean_list.html', beans=beans)
 
 
+@app.route('/bean/detail/<int:bean_id>')
+@login_required
+def bean_detail(bean_id):
+    bean = Bean.query.get(bean_id)
+    return render_template('bean_detail.html', bean=bean)
+
+
 @app.route('/brew/add', methods=['GET', 'POST'])
 @app.route('/brew/add/<int:brew_id>', methods=['GET', 'POST'])
 @login_required
@@ -154,6 +161,13 @@ def brew_list(page=1):
     user = g.user
     brews = Brew.query.filter_by(user_id=user.id).order_by(Brew.brew_date.desc()).paginate(page, BREWS_PER_PAGE, False)
     return render_template('brew_list.html', brews=brews)
+
+
+@app.route('/brew/detail/<int:brew_id>')
+@login_required
+def brew_detail(brew_id):
+    brew = Brew.query.get(brew_id)
+    return render_template('brew_detail.html', brew=brew)
 
 
 @app.route('/roast/add', methods=['GET', 'POST'])
@@ -225,3 +239,10 @@ def roast_list(page=1):
     roasts = Roast.query.filter_by(user_id=user.id).order_by(Roast.roast_date.desc()).paginate(
         page, ROASTS_PER_PAGE, False)
     return render_template('roast_list.html', roasts=roasts)
+
+
+@app.route('/roast/detail/<int:roast_id>')
+@login_required
+def roast_detail(roast_id):
+    roast = Roast.query.get(roast_id)
+    return render_template('roast_detail.html', roast=roast)

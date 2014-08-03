@@ -1,0 +1,26 @@
+{% extends 'skeleton.html' %}
+
+{% from 'util_detail.html' import horizontal_table_column %}
+
+{% block body %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-4">
+            {{ horizontal_table_column('Bean Name', brew.bean.name) }}
+            {{ horizontal_table_column('Brew Date', brew.brew_date) }}
+            {{ horizontal_table_column('Grind Size', brew.grind_size_str()) }}
+            {{ horizontal_table_column('Brew Method', brew.brew_method_str()) }}
+        </div>
+        <div class="col-md-4">
+            {{ horizontal_table_column('Roast Batch', brew.roast.roast_date) }}
+            {{ horizontal_table_column('Bean Weight (grams)', brew.bean_dose) }}
+            {{ horizontal_table_column('Water Dose (mL)', brew.water_dose) }}
+            {{ horizontal_table_column('Extraction Time (sec)', brew.extraction_time) }}
+            {{ horizontal_table_column('Filter Type', brew.filter_type_str()) }}
+        </div>
+        <div class="col-md-4">
+            {{ horizontal_table_column('Notes', brew.notes) }}
+        </div>
+    </div>
+</div>
+{% endblock %}

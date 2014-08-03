@@ -1,0 +1,21 @@
+{% extends 'skeleton.html' %}
+
+{% from 'util_detail.html' import horizontal_table_column %}
+
+{% block body %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-4">
+            {{ horizontal_table_column('Purchase Date', bean.purchase_date) }}
+            {{ horizontal_table_column('Bean Type', bean.bean_type) }}
+        </div>
+        <div class="col-md-4">
+            {{ horizontal_table_column('Bean Name', bean.name) }}
+            {{ horizontal_table_column('Bag Weight', bean.weight) }}
+        </div>
+        <div class="col-md-4">
+            {{ horizontal_table_column('Notes', bean.notes) }}
+        </div>
+    </div>
+</div>
+{% endblock %}
