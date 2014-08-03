@@ -23,8 +23,6 @@
                     <th>Purchase Date</th>
                     <th>Bean Type</th>
                     <th>Bean Name</th>
-                    <th>Weight (grams)</th>
-                    <th>Notes</th>
                 </tr>
             {% for purchase in beans.items %}
                 <tr>
@@ -43,8 +41,6 @@
                     <td>{{ purchase.purchase_date }}</td>
                     <td>{{ purchase.bean_type_str() }}</td>
                     <td>{{ purchase.name }}</td>
-                    <td>{{ purchase.weight }}</td>
-                    <td>{{ purchase.notes }}</td>
                 </tr>
             {% endfor %}
             </table>
