@@ -1,6 +1,7 @@
 from datetime import date, datetime
 from flask_wtf import Form
-from wtforms import StringField, PasswordField, IntegerField, SelectField, DateField, TextAreaField, DateTimeField
+from wtforms import StringField, PasswordField, IntegerField, SelectField, DateField, TextAreaField, DateTimeField, \
+    HiddenField
 from wtforms.validators import DataRequired, EqualTo, Optional, NumberRange
 from app.models import BEAN_TYPES, GRIND_SIZES, BREW_METHODS, FILTER_TYPES, ROASTER_MACHINES
 
@@ -24,7 +25,7 @@ class BeanPurchaseForm(Form):
     weight = IntegerField('Weight (grams)', validators=[NumberRange(min=0)])
     purchase_date = DateField('Purchase Date', validators=[DataRequired()], default=date.today())
     notes = TextAreaField('Notes', validators=[Optional()])
-
+    bean_id = HiddenField('Bean ID', validators=[Optional()], default=0)
 
 class BrewForm(Form):
     grind_size = SelectField('Grind Size', choices=[(g, GRIND_SIZES[g]) for g in GRIND_SIZES],
@@ -40,6 +41,7 @@ class BrewForm(Form):
     notes = TextAreaField('Notes', validators=[Optional()])
     roast_batch = SelectField('Roast Batch', coerce=int, validators=[Optional()])
     bean_id = SelectField('Bean', coerce=int, validators=[NumberRange(min=0)])
+    brew_id = HiddenField('Brew ID', validators=[Optional()], default=0)
 
 
 class RoastForm(Form):
@@ -63,3 +65,4 @@ class RoastForm(Form):
     roast_date = DateTimeField('Roast Date', validators=[DataRequired()], default=datetime.now())
     notes = TextAreaField('Notes', validators=[Optional()])
     bean_id = SelectField('Bean', coerce=int, validators=[NumberRange(min=0)])
+    roast_id = HiddenField('Roast ID', validators=[Optional()], default=0)

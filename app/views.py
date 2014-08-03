@@ -57,15 +57,33 @@ def logout():
 
 
 @app.route('/bean/add', methods=['GET', 'POST'])
+@app.route('/bean/add/<int:bean_id>', methods=['GET', 'POST'])
 @login_required
-def bean_add():
-    form = BeanPurchaseForm()
+def bean_add(bean_id=None):
     user = g.user
+    form = BeanPurchaseForm()
+    if bean_id:
+        bean = Bean.query.get(bean_id)
+        form.name.data = bean.name
+        form.type.data = bean.bean_type
+        form.weight.data = bean.weight
+        form.purchase_date.data = bean.purchase_date
+        form.notes.data = bean.notes
+        form.bean_id.data = bean.id
     if form.validate_on_submit():
-        bean = Bean(
-            name=form.name.data, bean_type=form.type.data,
-            weight=form.weight.data, purchase_date=form.purchase_date.data,
-            notes=form.notes.data, user_id=user.id)
+        form.bean_id.data = int(form.bean_id.data)
+        if form.bean_id.data == 0:
+            bean = Bean()
+        else:
+            bean = Bean.query.get(form.bean_id.data)
+            if bean.user_id != user.id:
+                return redirect(url_for('bean_list'))
+        bean.name = form.name.data
+        bean.bean_type = form.type.data
+        bean.weight = form.weight.data
+        bean.purchase_date = form.purchase_date.data
+        bean.notes = form.notes.data
+        bean.user_id = user.id
         Bean.add_bean(bean)
         return redirect(url_for('bean_list'))
     return render_template('bean_add.html', form=form)
@@ -82,8 +100,9 @@ def bean_list(page=1):
 
 
 @app.route('/brew/add', methods=['GET', 'POST'])
+@app.route('/brew/add/<int:brew_id>', methods=['GET', 'POST'])
 @login_required
-def brew_add():
+def brew_add(brew_id=None):
     user = g.user
     form = BrewForm()
     form.roast_batch.choices = [(r.id, '%s - %s' % (r.roast_date, r.bean.name)) for r in Roast.query.filter_by(
@@ -91,16 +110,39 @@ def brew_add():
     form.roast_batch.choices.append((0, 'N/A'))
     form.bean_id.choices = [(b.id, '%s - %s (%dg)' % (b.purchase_date, b.name, b.weight)) for b in Bean.query.filter_by(
         user_id=user.id).order_by(Bean.purchase_date.desc()).limit(10).all()]
+    if brew_id:
+        brew = Brew.query.get(brew_id)
+        form.roast_batch.data = brew.roast_id
+        form.bean_id.data = brew.bean_id
+        form.grind_size.data = brew.grind_size
+        form.bean_dose.data = brew.bean_dose
+        form.water_dose.data = brew.water_dose
+        form.extraction_time.data = brew.extraction_time
+        form.brew_method.data = brew.brew_method
+        form.filter_type.data = brew.filter_type
+        form.brew_date.data = brew.brew_date
+        form.notes.data = brew.notes
+        form.brew_id.data = brew.id
     if form.validate_on_submit():
-        _brew = Brew(
-            grind_size=form.grind_size.data, bean_dose=form.bean_dose.data, water_dose=form.water_dose.data,
-            extraction_time=form.extraction_time.data, brew_method=form.brew_method.data,
-            filter_type=form.filter_type.data, brew_date=form.brew_date.data, notes=form.notes.data,
-            user_id=user.id, bean_id=form.bean_id.data
-        )
-        if form.roast_batch.data != 0:
-            _brew.roast_id = form.roast_batch.data
-        Brew.add_brew(_brew)
+        form.brew_id.data = int(form.brew_id.data)
+        if form.brew_id.data == 0:
+            brew = Brew()
+        else:
+            brew = Brew.query.get(form.brew_id.data)
+            if brew.user_id != user.id:
+                return redirect(url_for('brew_list'))
+        brew.grind_size = form.grind_size.data
+        brew.bean_dose = form.bean_dose.data
+        brew.water_dose = form.water_dose.data
+        brew.extraction_time = form.extraction_time.data
+        brew.brew_method = form.brew_method.data
+        brew.filter_type = form.filter_type.data
+        brew.brew_date = form.brew_date.data
+        brew.notes = form.notes.data
+        brew.user_id = user.id
+        brew.bean_id = form.bean_id.data
+        brew.roast_id = form.roast_batch.data
+        Brew.add_brew(brew)
         return redirect(url_for('brew_list'))
     return render_template('brew_add.html', form=form)
 
@@ -115,23 +157,62 @@ def brew_list(page=1):
 
 
 @app.route('/roast/add', methods=['GET', 'POST'])
+@app.route('/roast/add/<int:roast_id>', methods=['GET', 'POST'])
 @login_required
-def roast_add():
+def roast_add(roast_id=None):
     user = g.user
     form = RoastForm()
     form.bean_id.choices = [(b.id, '%s - %s (%dg)' % (b.purchase_date, b.name, b.weight)) for b in Bean.query.filter_by(
         user_id=user.id).order_by(Bean.purchase_date.desc()).limit(10).all()]
+    if roast_id:
+        roast = Roast.query.get(roast_id)
+        form.bean_dose.data = roast.bean_dose
+        form.drop_temp.data = roast.drop_temp
+        form.dry_end_time.data = roast.dry_end_time
+        form.dry_end_temp.data = roast.dry_end_temp
+        form.fc_begin_time.data = roast.fc_begin_time
+        form.fc_begin_temp.data = roast.fc_begin_temp
+        form.fc_end_time.data = roast.fc_end_time
+        form.fc_end_temp.data = roast.fc_end_temp
+        form.sc_begin_time.data = roast.sc_begin_time
+        form.sc_begin_temp.data = roast.sc_begin_temp
+        form.sc_end_time.data = roast.sc_end_time
+        form.sc_end_temp.data = roast.sc_end_temp
+        form.end_time.data = roast.end_time
+        form.end_temp.data = roast.end_temp
+        form.end_weight.data = roast.end_weight
+        form.roaster_machine.data = roast.roaster_machine
+        form.roast_date.data = roast.roast_date
+        form.notes.data = roast.notes
+        form.bean_id.data = roast.bean_id
+        form.roast_id.data = roast.id
     if form.validate_on_submit():
-        _roast = Roast(
-            bean_dose=form.bean_dose.data, drop_temp=form.drop_temp.data, dry_end_time=form.dry_end_time.data,
-            dry_end_temp=form.dry_end_temp.data, fc_begin_time=form.fc_begin_time.data,
-            fc_begin_temp=form.fc_begin_temp.data, fc_end_time=form.fc_end_time.data, fc_end_temp=form.fc_end_temp.data,
-            sc_begin_time=form.sc_begin_time.data, sc_begin_temp=form.sc_begin_temp.data,
-            sc_end_time=form.sc_end_time.data, sc_end_temp=form.sc_end_temp.data, end_time=form.end_time.data,
-            end_temp=form.end_temp.data, end_weight=form.end_weight.data, roaster_machine=form.roaster_machine.data,
-            roast_date=form.roast_date.data, notes=form.notes.data, bean_id=form.bean_id.data, user_id=user.id
-        )
-        Roast.add_roast(_roast)
+        form.roast_id.data = int(form.roast_id.data)
+        if form.roast_id.data == 0:
+            roast = Roast()
+        else:
+            roast = Roast.query.get(form.roast_id.data)
+        roast.bean_dose = form.bean_dose.data
+        roast.drop_temp = form.drop_temp.data
+        roast.dry_end_time = form.dry_end_time.data
+        roast.dry_end_temp = form.dry_end_temp.data
+        roast.fc_begin_time = form.fc_begin_time.data
+        roast.fc_begin_temp = form.fc_begin_temp.data
+        roast.fc_end_time = form.fc_end_time.data
+        roast.fc_end_temp = form.fc_end_temp.data
+        roast.sc_begin_time = form.sc_begin_time.data
+        roast.sc_begin_temp = form.sc_begin_temp.data
+        roast.sc_end_time = form.sc_end_time.data
+        roast.sc_end_temp = form.sc_end_temp.data
+        roast.end_time = form.end_time.data
+        roast.end_temp = form.end_temp.data
+        roast.end_weight = form.end_weight.data
+        roast.roaster_machine = form.roaster_machine.data
+        roast.roast_date = form.roast_date.data
+        roast.notes = form.notes.data
+        roast.bean_id = form.bean_id.data
+        roast.user_id = user.id
+        Roast.add_roast(roast)
         return redirect(url_for('roast_list'))
     return render_template('roast_add.html', form=form)
 
