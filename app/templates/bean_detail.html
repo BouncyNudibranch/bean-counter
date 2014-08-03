@@ -14,7 +14,8 @@
             {{ horizontal_table_column('Bag Weight', bean.weight) }}
         </div>
         <div class="col-md-4">
-            {{ horizontal_table_column('Notes', bean.notes) }}
+            <div class="table_label left_align">Notes</div>
+            <div>{{ bean.notes }}</div>
         </div>
     </div>
 </div>
