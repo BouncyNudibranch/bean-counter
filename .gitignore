@@ -1,3 +1,4 @@
 env/
 *.pyo
 *.pyc
+bean_counter.db
