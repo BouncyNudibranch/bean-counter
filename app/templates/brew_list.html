@@ -22,14 +22,8 @@
                     <th></th>
                     <th>Brew Date</th>
                     <th>Bean</th>
-                    <th>Grind Size</th>
                     <th>Brew Method</th>
-                    <th>Bean Weight (grams)</th>
-                    <th>Water Volume (mL)</th>
-                    <th>Extraction Time (sec)</th>
-                    <th>Filter Type</th>
                     <th>Roast Batch</th>
-                    <th>Notes</th>
                 </tr>
             {% for brew in brews.items %}
                 <tr>
@@ -47,12 +41,7 @@
                     </td>
                     <td>{{ brew.brew_date }}</td>
                     <td><a href="#bean-{{ brew.bean.id }}">{{ brew.bean.name }}</a></td>
-                    <td>{{ brew.grind_size_str() }}</td>
                     <td>{{ brew.brew_method_str() }}</td>
-                    <td>{{ brew.bean_dose }}</td>
-                    <td>{{ brew.water_dose }}</td>
-                    <td>{{ brew.extraction_time }}</td>
-                    <td>{{ brew.filter_type_str() }}</td>
                     <td>
                     {% if brew.roast is not none %}
                         <a href="#roast-{{ brew.roast.id }}">{{ brew.roast.roast_date }}</a>
@@ -60,7 +49,6 @@
                         N/A
                     {% endif %}
                     </td>
-                    <td>{{ brew.notes }}</td>
                 </tr>
             {% endfor %}
             </table>
