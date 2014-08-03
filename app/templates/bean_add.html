@@ -2,6 +2,12 @@
 
 {% from 'forms_util.html' import labeled_input, labeled_input_date %}
 
+{% if form.bean_id.data == 0 %}
+    {% set delete_disable_flag = 'disabled' %}
+{% else %}
+    {% set delete_disable_flag = '' %}
+{% endif %}
+
 {% block body %}
 <div class="container-fluid">
     <form class="form-horizontal" role="form" method="POST" action="{{ url_for('bean_add') }}">
@@ -18,8 +24,11 @@
             </div>
         </div>
         <div class="form-group">
-            <div class="col-md-offset-4 col-md-4">
+            <div class="col-md-offset-2 col-md-4">
                 <button type="submit" class="btn btn-default btn-block">Submit</button>
+            </div>
+            <div class="col-md-4">
+                <a class="btn btn-default btn-block {{ delete_disable_flag }}" href="{{ url_for('bean_delete', bean_id=form.bean_id.data) }}">Delete</a>
             </div>
         </div>
     </form>

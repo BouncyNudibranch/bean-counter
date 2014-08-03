@@ -106,6 +106,17 @@ def bean_detail(bean_id):
     return render_template('bean_detail.html', bean=bean)
 
 
+@app.route('/bean/delete/<int:bean_id>')
+@login_required
+def bean_delete(bean_id):
+    bean = Bean.query.get(bean_id)
+    try:
+        bean.remove_bean()
+    except AttributeError:
+        pass
+    return redirect(url_for('bean_list'))
+
+
 @app.route('/brew/add', methods=['GET', 'POST'])
 @app.route('/brew/add/<int:brew_id>', methods=['GET', 'POST'])
 @login_required
@@ -168,6 +179,17 @@ def brew_list(page=1):
 def brew_detail(brew_id):
     brew = Brew.query.get(brew_id)
     return render_template('brew_detail.html', brew=brew)
+
+
+@app.route('/brew/delete/<int:brew_id>')
+@login_required
+def brew_delete(brew_id):
+    brew = Brew.query.get(brew_id)
+    try:
+        brew.remove_brew()
+    except AttributeError:
+        pass
+    return redirect(url_for('brew_list'))
 
 
 @app.route('/roast/add', methods=['GET', 'POST'])
@@ -246,3 +268,14 @@ def roast_list(page=1):
 def roast_detail(roast_id):
     roast = Roast.query.get(roast_id)
     return render_template('roast_detail.html', roast=roast)
+
+
+@app.route('/roast/delete/<int:roast_id>')
+@login_required
+def roast_delete(roast_id):
+    roast = Roast.query.get(roast_id)
+    try:
+        roast.remove_roast()
+    except AttributeError:
+        pass
+    return redirect(url_for('roast_list'))

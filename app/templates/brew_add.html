@@ -2,6 +2,12 @@
 
 {% from 'forms_util.html' import labeled_input, labeled_input_datetime %}
 
+{% if form.brew_id.data == 0 %}
+    {% set delete_disable_flag = 'disabled' %}
+{% else %}
+    {% set delete_disable_flag = '' %}
+{% endif %}
+
 {% block body %}
 <div class="container-fluid">
     {% for error in errors %}
@@ -26,8 +32,11 @@
             </div>
         </div>
         <div class="form-group">
-            <div class="col-md-offset-4 col-md-4">
+            <div class="col-md-offset-2 col-md-4">
                 <button type="submit" class="btn btn-default btn-block">Submit</button>
+            </div>
+            <div class="col-md-4">
+                <a class="btn btn-default btn-block {{ delete_disable_flag }}" href="{{ url_for('brew_delete', brew_id=form.brew_id.data) }}">Delete</a>
             </div>
         </div>
     </form>

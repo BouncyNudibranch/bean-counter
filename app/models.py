@@ -103,6 +103,11 @@ class Brew(db.Model):
     def grind_size_str(self):
         return GRIND_SIZES[self.grind_size]
 
+    def remove_brew(self, commit=True):
+        db.session.delete(self)
+        if commit:
+            db.session.commit()
+
     @staticmethod
     def add_brew(brew, commit=True):
         db.session.add(brew)
@@ -139,6 +144,11 @@ class Roast(db.Model):
     def roaster_machine_str(self):
         return ROASTER_MACHINES[self.roaster_machine]
 
+    def remove_roast(self, commit=True):
+        db.session.delete(self)
+        if commit:
+            db.session.commit()
+
     @staticmethod
     def add_roast(roast, commit=True):
         db.session.add(roast)
@@ -161,6 +171,11 @@ class Bean(db.Model):
 
     def bean_type_str(self):
         return BEAN_TYPES[self.bean_type]
+
+    def remove_bean(self, commit=True):
+        db.session.delete(self)
+        if commit:
+            db.session.commit()
 
     @staticmethod
     def add_bean(bean, commit=True):
