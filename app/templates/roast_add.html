@@ -1,6 +1,6 @@
 {% extends 'skeleton.html' %}
 
-{% from 'forms_util.html' import labeled_input %}
+{% from 'forms_util.html' import labeled_input, labeled_input_datetime %}
 
 {% block body %}
 <div class="container-fluid">
@@ -32,7 +32,7 @@
                 {{ labeled_input(form.end_time, 4, 8) }}
                 {{ labeled_input(form.end_temp, 4, 8) }}
                 {{ labeled_input(form.end_weight, 4, 8) }}
-                {{ labeled_input(form.roast_date, 4, 8) }}
+                {{ labeled_input_datetime(form.roast_date, 4, 8) }}
                 {{ labeled_input(form.notes, 4, 8) }}
             </div>
         </div>
@@ -43,4 +43,16 @@
         </div>
     </form>
 </div>
+{% endblock %}
+{% block extra_scripts %}
+<script type="text/javascript" src="{{ url_for('static', filename='moment.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='bootstrap-datetimepicker.js') }}"></script>
+<script type="text/javascript">
+    $(function(){
+        $("#datetimepicker").datetimepicker();
+    });
+</script>
+{% endblock %}
+{% block extra_style %}
+<link rel="stylesheet" href="{{ url_for('static', filename='bootstrap-datetimepicker.css') }}" type="text/css">
 {% endblock %}

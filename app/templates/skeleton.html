@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
   <link rel="stylesheet" href="{{ url_for('static', filename='coffee-style.css') }}">
+  {% block extra_style %}{% endblock %}
 </head>
 <body>
     <nav class="navbar navbar-default" role="navigation">
@@ -39,9 +40,10 @@
         </div>
     </nav>
 {% block body %}
-
 {% endblock %}
-  <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
-  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+  <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+{% block extra_scripts %}
+{% endblock %}
 </body>
 </html>

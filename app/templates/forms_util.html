@@ -9,3 +9,37 @@
             </div>
     </div>
 {%- endmacro %}
+
+{% macro labeled_input_date(field, label_size=2, input_size=10) -%}
+    <div class="form-group">
+            <label class="col-md-{{ label_size }} control-label" for="{{ field.id }}">{{ field.label }}</label>
+            <div class="col-md-{{ input_size }}">
+                <div id="datepicker" class="input-group date" data-date-format="YYYY-MM-DD">
+                    {{ field(class_='form-control') }}
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+                {% for error in field.errors %}
+                    <p class="input_error">{{ error }}</p>
+                {% endfor %}
+            </div>
+    </div>
+{%- endmacro %}
+
+{% macro labeled_input_datetime(field, label_size=2, input_size=10) -%}
+    <div class="form-group">
+            <label class="col-md-{{ label_size }} control-label" for="{{ field.id }}">{{ field.label }}</label>
+            <div class="col-md-{{ input_size }}">
+                <div id="datetimepicker" class="input-group date" data-date-format="YYYY-MM-DD HH:mm:ss">
+                    {{ field(class_='form-control') }}
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+                {% for error in field.errors %}
+                    <p class="input_error">{{ error }}</p>
+                {% endfor %}
+            </div>
+    </div>
+{%- endmacro %}
