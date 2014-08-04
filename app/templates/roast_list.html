@@ -38,7 +38,7 @@
                         </div>
                     </td>
                     <td>{{ roast.roast_date }}</td>
-                    <td><a href="#bean-{{ roast.bean.id }}">{{ roast.bean.name }}</a></td>
+                    <td><a href="{{ url_for('bean_detail', bean_id=roast.bean.id) }}">{{ roast.bean.name }}</a></td>
                     <td>{{ roast.roaster_machine_str() }}</td>
                 </tr>
             {% endfor %}

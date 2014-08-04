@@ -39,7 +39,7 @@
                         </div>
                     </td>
                     <td>{{ brew.brew_date }}</td>
-                    <td><a href="#bean-{{ brew.bean.id }}">{{ brew.bean.name }}</a></td>
+                    <td><a href="{{ url_for('bean_detail', bean_id=brew.bean.id) }}">{{ brew.bean.name }}</a></td>
                     <td>{{ brew.brew_method_str() }}</td>
                     <td>
                     {% if brew.roast is not none %}
