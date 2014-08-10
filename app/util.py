@@ -1,3 +1,5 @@
+from math import floor
+
 SEC_PER_MIN = 60
 SEC_PER_HR = 60 * SEC_PER_MIN
 SEC_PER_DAY = 24 * SEC_PER_HR
@@ -17,11 +19,21 @@ def timestring_to_seconds(timestr):
         return None
 
 
-def test_timestring_to_seconds():
-    assert timestring_to_seconds('05') == 5
-    assert timestring_to_seconds('45') == 45
-    assert timestring_to_seconds('1:03') == 63
-    assert timestring_to_seconds('1:37') == 97
-    assert timestring_to_seconds('02:15') == 135
-    assert timestring_to_seconds('01:00:00') == 3600
-    assert timestring_to_seconds('1:0:1') == 3601
+def seconds_to_timestring(seconds):
+    if seconds < SEC_PER_MIN:
+        return "00:{:02d}".format(seconds)
+    elif seconds < SEC_PER_HR:
+        mins = int(floor(seconds / SEC_PER_MIN))
+        sec = seconds % SEC_PER_MIN
+        return "{:02d}:{:02d}".format(mins, sec)
+    elif seconds < SEC_PER_DAY:
+        hrs = int(floor(seconds / SEC_PER_HR))
+        mins = int(floor((seconds - (hrs * SEC_PER_HR)) / SEC_PER_MIN))
+        sec = seconds - mins * SEC_PER_MIN - hrs * SEC_PER_HR
+        return "{:02d}:{:02d}:{:02d}".format(hrs, mins, sec)
+    else:
+        days = int(floor(seconds / SEC_PER_DAY))
+        hrs = int(floor((seconds - days * SEC_PER_DAY) / SEC_PER_HR))
+        mins = int(floor((seconds - days * SEC_PER_DAY - hrs * SEC_PER_HR) / SEC_PER_MIN))
+        sec = seconds - days * SEC_PER_DAY - hrs * SEC_PER_HR - mins * SEC_PER_MIN
+        return "{:02d}:{:02d}:{:02d}:{:02d}".format(days, hrs, mins, sec)
