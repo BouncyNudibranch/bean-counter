@@ -101,7 +101,7 @@ def bean_list(page=1):
 
 
 @app.route('/bean/detail/<int:bean_id>')
-@login_required
+# @login_required
 def bean_detail(bean_id):
     bean = Bean.query.get(bean_id)
     return render_template('bean_detail.html', bean=bean)
@@ -176,7 +176,7 @@ def brew_list(page=1):
 
 
 @app.route('/brew/detail/<int:brew_id>')
-@login_required
+# @login_required
 def brew_detail(brew_id):
     brew = Brew.query.get(brew_id)
     return render_template('brew_detail.html', brew=brew)
@@ -265,7 +265,7 @@ def roast_list(page=1):
 
 
 @app.route('/roast/detail/<int:roast_id>')
-@login_required
+# @login_required
 def roast_detail(roast_id):
     roast = Roast.query.get(roast_id)
     return render_template('roast_detail.html', roast=roast)
