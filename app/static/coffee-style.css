@@ -3,10 +3,15 @@
 body {
     background: #F6EEEA;
     font-family: "Oswald";
+    padding-bottom: 70px;
 }
 
 img {
 
+}
+
+#footer {
+    text-align: center;
 }
 
 .navbar-brand {
