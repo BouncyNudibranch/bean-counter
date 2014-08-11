@@ -13,17 +13,17 @@
         </div>
         <div class="col-md-4">
             {{ horizontal_table_column('Drop Temp (F)', roast.drop_temp) }}
-            {{ horizontal_table_column('Dry Phase End Time (sec)', roast.dry_end_time) }}
+            {{ horizontal_table_column('Dry Phase End Time', roast.dry_end_time|sec_to_time) }}
             {{ horizontal_table_column('Dry Phase End Temp (F)', roast.dry_end_temp) }}
-            {{ horizontal_table_column('First Crack Begin Time (sec)', roast.fc_begin_time) }}
+            {{ horizontal_table_column('First Crack Begin Time', roast.fc_begin_time|sec_to_time) }}
             {{ horizontal_table_column('First Crack Begin Temp (F)', roast.fc_begin_temp) }}
-            {{ horizontal_table_column('First Crack End Time (sec)', roast.fc_end_time) }}
+            {{ horizontal_table_column('First Crack End Time', roast.fc_end_time|sec_to_time) }}
             {{ horizontal_table_column('First Crack End Temp (F)', roast.fc_end_temp) }}
-            {{ horizontal_table_column('Second Crack Begin Time (sec)', roast.sc_begin_time) }}
+            {{ horizontal_table_column('Second Crack Begin Time', roast.sc_begin_time|sec_to_time) }}
             {{ horizontal_table_column('Second Crack Begin Temp (F)', roast.sc_begin_temp) }}
-            {{ horizontal_table_column('Second Crack End Time (sec)', roast.sc_end_time) }}
+            {{ horizontal_table_column('Second Crack End Time', roast.sc_end_time|sec_to_time) }}
             {{ horizontal_table_column('Second Crack End Temp (F)', roast.sc_end_temp) }}
-            {{ horizontal_table_column('Roast End Time (sec)', roast.end_time) }}
+            {{ horizontal_table_column('Roast End Time', roast.end_time|sec_to_time) }}
             {{ horizontal_table_column('Roast End Temp (F)', roast.end_temp) }}
             {{ horizontal_table_column('End Weight (grams)', roast.end_weight) }}
         </div>

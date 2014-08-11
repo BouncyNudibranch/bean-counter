@@ -4,6 +4,7 @@ from config import BEANS_PER_PAGE, BREWS_PER_PAGE, ROASTS_PER_PAGE
 from app import app, db, login_manager
 from app.models import User, Bean, Brew, Roast
 from app.forms import LoginForm, RegisterForm, BeanPurchaseForm, BrewForm, RoastForm
+from app.util import timestring_to_seconds, seconds_to_timestring
 
 
 @login_manager.user_loader
@@ -135,7 +136,7 @@ def brew_add(brew_id=None):
         form.grind_size.data = brew.grind_size
         form.bean_dose.data = brew.bean_dose
         form.water_dose.data = brew.water_dose
-        form.extraction_time.data = brew.extraction_time
+        form.extraction_time.data = seconds_to_timestring(brew.extraction_time)
         form.brew_method.data = brew.brew_method
         form.filter_type.data = brew.filter_type
         form.brew_date.data = brew.brew_date
@@ -152,7 +153,7 @@ def brew_add(brew_id=None):
         brew.grind_size = form.grind_size.data
         brew.bean_dose = form.bean_dose.data
         brew.water_dose = form.water_dose.data
-        brew.extraction_time = form.extraction_time.data
+        brew.extraction_time = timestring_to_seconds(form.extraction_time.data)
         brew.brew_method = form.brew_method.data
         brew.filter_type = form.filter_type.data
         brew.brew_date = form.brew_date.data
@@ -204,17 +205,17 @@ def roast_add(roast_id=None):
         roast = Roast.query.get(roast_id)
         form.bean_dose.data = roast.bean_dose
         form.drop_temp.data = roast.drop_temp
-        form.dry_end_time.data = roast.dry_end_time
+        form.dry_end_time.data = seconds_to_timestring(roast.dry_end_time)
         form.dry_end_temp.data = roast.dry_end_temp
-        form.fc_begin_time.data = roast.fc_begin_time
+        form.fc_begin_time.data = seconds_to_timestring(roast.fc_begin_time)
         form.fc_begin_temp.data = roast.fc_begin_temp
-        form.fc_end_time.data = roast.fc_end_time
+        form.fc_end_time.data = seconds_to_timestring(roast.fc_end_time)
         form.fc_end_temp.data = roast.fc_end_temp
-        form.sc_begin_time.data = roast.sc_begin_time
+        form.sc_begin_time.data = seconds_to_timestring(roast.sc_begin_time)
         form.sc_begin_temp.data = roast.sc_begin_temp
-        form.sc_end_time.data = roast.sc_end_time
+        form.sc_end_time.data = seconds_to_timestring(roast.sc_end_time)
         form.sc_end_temp.data = roast.sc_end_temp
-        form.end_time.data = roast.end_time
+        form.end_time.data = seconds_to_timestring(roast.end_time)
         form.end_temp.data = roast.end_temp
         form.end_weight.data = roast.end_weight
         form.roaster_machine.data = roast.roaster_machine
@@ -230,17 +231,17 @@ def roast_add(roast_id=None):
             roast = Roast.query.get(form.roast_id.data)
         roast.bean_dose = form.bean_dose.data
         roast.drop_temp = form.drop_temp.data
-        roast.dry_end_time = form.dry_end_time.data
+        roast.dry_end_time = timestring_to_seconds(form.dry_end_time.data)
         roast.dry_end_temp = form.dry_end_temp.data
-        roast.fc_begin_time = form.fc_begin_time.data
+        roast.fc_begin_time = timestring_to_seconds(form.fc_begin_time.data)
         roast.fc_begin_temp = form.fc_begin_temp.data
-        roast.fc_end_time = form.fc_end_time.data
+        roast.fc_end_time = timestring_to_seconds(form.fc_end_time.data)
         roast.fc_end_temp = form.fc_end_temp.data
-        roast.sc_begin_time = form.sc_begin_time.data
+        roast.sc_begin_time = timestring_to_seconds(form.sc_begin_time.data)
         roast.sc_begin_temp = form.sc_begin_temp.data
-        roast.sc_end_time = form.sc_end_time.data
+        roast.sc_end_time = timestring_to_seconds(form.sc_end_time.data)
         roast.sc_end_temp = form.sc_end_temp.data
-        roast.end_time = form.end_time.data
+        roast.end_time = timestring_to_seconds(form.end_time.data)
         roast.end_temp = form.end_temp.data
         roast.end_weight = form.end_weight.data
         roast.roaster_machine = form.roaster_machine.data
