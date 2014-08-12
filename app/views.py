@@ -130,8 +130,11 @@ def bean_detail(bean_id):
 @app.route('/bean/delete/<int:bean_id>')
 @login_required
 def bean_delete(bean_id):
+    user = g.user
     bean = Bean.query.get(bean_id)
     try:
+        if bean.user_id != user.id:
+            return redirect(url_for('bean_list'))
         bean.remove_bean()
     except AttributeError:
         pass
@@ -205,8 +208,11 @@ def brew_detail(brew_id):
 @app.route('/brew/delete/<int:brew_id>')
 @login_required
 def brew_delete(brew_id):
+    user = g.user
     brew = Brew.query.get(brew_id)
     try:
+        if brew.user_id != user.id:
+            return redirect(url_for('brew_list'))
         brew.remove_brew()
     except AttributeError:
         pass
@@ -249,6 +255,8 @@ def roast_add(roast_id=None):
             roast = Roast()
         else:
             roast = Roast.query.get(form.roast_id.data)
+            if roast.user_id != user.id:
+                return redirect(url_for('roast_list'))
         roast.bean_dose = form.bean_dose.data
         roast.drop_temp = form.drop_temp.data
         roast.dry_end_time = timestring_to_seconds(form.dry_end_time.data)
@@ -294,8 +302,11 @@ def roast_detail(roast_id):
 @app.route('/roast/delete/<int:roast_id>')
 @login_required
 def roast_delete(roast_id):
+    user = g.user
     roast = Roast.query.get(roast_id)
     try:
+        if roast.user_id != user.id:
+            return redirect(url_for('roast_list'))
         roast.remove_roast()
     except AttributeError:
         pass
