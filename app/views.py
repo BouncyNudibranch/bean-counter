@@ -123,7 +123,8 @@ def bean_list(page=1):
 # @login_required
 def bean_detail(bean_id):
     bean = Bean.query.get(bean_id)
-    return render_template('bean_detail.html', bean=bean)
+    roast_aggregates = bean.get_aggregate_roast_stats()
+    return render_template('bean_detail.html', bean=bean, roast_aggregates=roast_aggregates)
 
 
 @app.route('/bean/delete/<int:bean_id>')

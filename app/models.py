@@ -196,6 +196,39 @@ class Bean(db.Model):
         if commit:
             db.session.commit()
 
+    def get_aggregate_roast_stats(self):
+        q = db.session.query(
+            Roast,
+            db.func.min(Roast.dry_end_time),
+            db.func.max(Roast.dry_end_time),
+            db.func.min(Roast.dry_end_temp),
+            db.func.max(Roast.dry_end_temp),
+            db.func.min(Roast.fc_begin_time),
+            db.func.max(Roast.fc_begin_time),
+            db.func.min(Roast.fc_begin_temp),
+            db.func.max(Roast.fc_begin_temp),
+            db.func.min(Roast.fc_end_time),
+            db.func.max(Roast.fc_end_time),
+            db.func.min(Roast.fc_end_temp),
+            db.func.max(Roast.fc_end_temp),
+            db.func.min(Roast.sc_begin_time),
+            db.func.max(Roast.sc_begin_time),
+            db.func.min(Roast.sc_begin_temp),
+            db.func.max(Roast.sc_begin_temp),
+            db.func.min(Roast.sc_end_time),
+            db.func.max(Roast.sc_end_time),
+            db.func.min(Roast.sc_end_temp),
+            db.func.max(Roast.sc_end_temp),
+            db.func.min(Roast.end_time),
+            db.func.max(Roast.end_time),
+            db.func.min(Roast.end_temp),
+            db.func.max(Roast.end_temp),
+            db.func.min(Roast.drop_temp),
+            db.func.max(Roast.drop_temp)
+        )
+        q = q.filter(Roast.bean_id == self.id).group_by(Roast.roaster_machine).all()
+        return q
+
     @staticmethod
     def add_bean(bean, commit=True):
         db.session.add(bean)

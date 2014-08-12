@@ -4,3 +4,21 @@
     <div class="col-xs-6"><p class="table_value">{{ value }}</p></div>
 </div>
 {%- endmacro %}
+
+{% macro range_field(min, max, units='') -%}
+<span class="range_value_min">{{ min }}</span>
+<span class="range_delimeter">-</span>
+<span class="range_value_max">{{ max }}</span>
+<span class="range_units">{{ units }}</span>
+{%- endmacro %}
+
+{% macro time_temp_range(time_min, time_max, temp_min, temp_max, units='F') -%}
+<span class="range_value_min">{{ time_min|sec_to_time }}</span>
+<span class="range_delimeter">-</span>
+<span class="range_value_max">{{ time_max|sec_to_time }}</span>
+<span class="range_delimeter">@</span>
+<span class="range_value_min">{{ temp_min }}</span>
+<span class="range_delimeter">-</span>
+<span class="range_value_max">{{ temp_max }}</span>
+<span class="range_units">{{ units }}</span>
+{% endmacro %}

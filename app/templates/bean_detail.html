@@ -1,9 +1,14 @@
 {% extends 'skeleton.html' %}
 
-{% from 'util_detail.html' import horizontal_table_column %}
+{% from 'util_detail.html' import horizontal_table_column, range_field, time_temp_range %}
 
 {% block body %}
 <div class="container-fluid">
+    <div class="row">
+        <div class="col-xs-12">
+            <h1>Bean Purchase Details</h1>
+        </div>
+    </div>
     <div class="row">
         <div class="col-md-4">
             {{ horizontal_table_column('Purchase Date', bean.purchase_date) }}
@@ -17,6 +22,27 @@
             <div class="table_label left_align">Notes</div>
             <div>{{ bean.notes }}</div>
         </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <h1>Roasting Statistics</h1>
+        </div>
+    </div>
+    <div class="row">
+    {% for stats in roast_aggregates %}
+        <div class="col-md-4">
+            <h3>{{ stats[0].roaster_machine_str() }}</h3>
+            {{ horizontal_table_column('Drop Temp', range_field(stats[25], stats[26], 'F')) }}
+            {{ horizontal_table_column('Dry Phase', time_temp_range(stats[1], stats[2], stats[3], stats[4])) }}
+            {{ horizontal_table_column('First Crack Start', time_temp_range(stats[5], stats[6], stats[7], stats[8])) }}
+            {{ horizontal_table_column('First Crack End', time_temp_range(stats[9], stats[10], stats[11], stats[12])) }}
+            {{ horizontal_table_column('Second Crack Start', time_temp_range(stats[13], stats[14], stats[15], stats[16])) }}
+            {{ horizontal_table_column('Second Crack End', time_temp_range(stats[17], stats[18], stats[19], stats[20])) }}
+            {{ horizontal_table_column('Roast End', time_temp_range(stats[21], stats[22], stats[23], stats[24])) }}
+        </div>
+    {% else %}
+        <div class="col-xs-12">There is nothing here...</div>
+    {% endfor %}
     </div>
     <div class="row">
         <div class="col-xs-4 col-xs-offset-4">
