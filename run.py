@@ -17,6 +17,14 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 """
 
+import os
 from app import app
 
-app.run(debug=True)
+try:
+    host = os.environ['OPENSHIFT_DIY_IP']
+    port = int(os.environ['OPENSHIFT_DIY_PORT'])
+except KeyError:
+    host = '127.0.0.1'
+    port = 5000
+
+app.run(debug=True, host=host, port=port)
