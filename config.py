@@ -22,6 +22,8 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 
 ENV_DB = 'BEANCOUNTER_DATABASE_URI'
 ENV_SKEY = 'BEANCOUNTER_SECRET_KEY'
+ENV_BIND_IP = 'BEANCOUNTER_BIND_IP'
+ENV_BIND_PORT = 'BEANCOUNTER_BIND_PORT'
 
 try:
     SQLALCHEMY_DATABASE_URI = os.environ[ENV_DB]
@@ -32,6 +34,13 @@ try:
     SECRET_KEY = os.environ[ENV_SKEY]
 except KeyError:
     SECRET_KEY = 'qwertyuiop[]'
+
+try:
+    BIND_IP = os.environ[ENV_BIND_IP]
+    BIND_PORT = os.environ[ENV_BIND_PORT]
+except KeyError:
+    BIND_IP = '127.0.0.1'
+    BIND_PORT = 5000
 
 BEANS_PER_PAGE = 20
 BREWS_PER_PAGE = 20
