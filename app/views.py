@@ -143,8 +143,8 @@ def bean_delete(bean_id):
 def brew_add(brew_id=None):
     user = g.user
     form = BrewForm()
-    form.roast_batch.choices = [(r.id, '%s - %s' % (r.roast_date, r.bean.name)) for r in Roast.query.filter_by(
-        user_id=user.id).order_by(Roast.roast_date.desc()).limit(10).all()]
+    form.roast_batch.choices = [(r.id, '%s - %s' % (r.roast_date, r.bean.name)) for r in Roast.query.filter(
+        Roast.user_id == user.id, Roast.bean_id > 0).order_by(Roast.roast_date.desc()).limit(10).all()]
     form.roast_batch.choices.append((0, 'N/A'))
     form.bean_id.choices = [(b.id, '%s - %s (%dg)' % (b.purchase_date, b.name, b.weight)) for b in Bean.query.filter_by(
         user_id=user.id).order_by(Bean.purchase_date.desc()).limit(10).all()]
