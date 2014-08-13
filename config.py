@@ -30,6 +30,8 @@ try:
 except KeyError:
     SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'bean_counter.db')
 
+SQLALCHEMY_MIGRATE_REPO = os.path.join(basedir, 'db_repository')
+
 try:
     SECRET_KEY = os.environ[ENV_SKEY]
 except KeyError:
