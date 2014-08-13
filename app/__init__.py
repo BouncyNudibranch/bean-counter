@@ -20,6 +20,8 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
+import markdown
+import bleach
 from app.util import seconds_to_timestring
 
 app = Flask(__name__)
@@ -29,6 +31,10 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
 
+bleach.ALLOWED_TAGS.append('p')  # Allow markdown to use paragraphs
+
 app.jinja_env.filters['sec_to_time'] = seconds_to_timestring
+app.jinja_env.filters['markdown'] = markdown.markdown
+app.jinja_env.filters['bleach_clean'] = bleach.clean
 
 from app import models, views
