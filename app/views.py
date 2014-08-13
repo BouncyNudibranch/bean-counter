@@ -38,11 +38,14 @@ def before_request():
 
 @app.route('/')
 def home():
-    users = db.session.query(db.func.count(User.id)).scalar()
-    beans = db.session.query(db.func.count(Bean.id)).scalar()
-    brews = db.session.query(db.func.count(Brew.id)).scalar()
-    roasts = db.session.query(db.func.count(Roast.id)).scalar()
-    return render_template('home.html', users=users, beans=beans, brews=brews, roasts=roasts)
+    stats = {
+        'users': db.session.query(db.func.count(User.id)).scalar(),
+        'beans': db.session.query(db.func.count(Bean.id)).scalar(),
+        'brews': db.session.query(db.func.count(Brew.id)).scalar(),
+        'roasts': db.session.query(db.func.count(Roast.id)).scalar(),
+        'cuppings': db.session.query(db.func.count(Cupping.id)).scalar()
+    }
+    return render_template('home.html', stats=stats)
 
 
 @app.route('/login', methods=['GET', 'POST'])
