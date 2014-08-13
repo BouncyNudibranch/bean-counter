@@ -5,12 +5,15 @@
         <div class="col-md-4 col-md-offset-2">
             <img class="img-responsive img-thumbnail" src="http://i.imgur.com/nb2lX2B.jpg">
         </div>
-        <div class="col-md-4">{{ lipsum(1) }}</div>
-    </div>
-    <div class="row top_margin_15">
-        <div class="col-md-4 col-md-offset-2">{{ lipsum(1) }}</div>
         <div class="col-md-4">
-            <img class="img-responsive img-thumbnail" src="http://i.imgur.com/r9EhPSF.jpg">
+            <div class="row">
+                <div class="col-xs-12">
+                    <h1>App Statistics</h1>
+                </div>
+                <div class="col-xs-12">
+                    <p>There are {{ users }} users tracking {{ beans }} beans, {{ roasts }} roasts, and {{ brews }} brews!</p>
+                </div>
+            </div>
         </div>
     </div>
 </div>
