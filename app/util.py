@@ -39,6 +39,8 @@ def timestring_to_seconds(timestr):
 
 
 def seconds_to_timestring(seconds):
+    if seconds is None:
+        return "None"
     if seconds < SEC_PER_MIN:
         return "00:{:02d}".format(seconds)
     elif seconds < SEC_PER_HR:
