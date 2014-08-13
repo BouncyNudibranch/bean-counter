@@ -37,7 +37,7 @@ except KeyError:
 
 try:
     BIND_IP = os.environ[ENV_BIND_IP]
-    BIND_PORT = os.environ[ENV_BIND_PORT]
+    BIND_PORT = int(os.environ[ENV_BIND_PORT])
 except KeyError:
     BIND_IP = '127.0.0.1'
     BIND_PORT = 5000
