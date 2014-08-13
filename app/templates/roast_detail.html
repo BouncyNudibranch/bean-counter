@@ -10,6 +10,7 @@
             {{ horizontal_table_column('Bean Name', roast.bean.name) }}
             {{ horizontal_table_column('Roaster', roast.roaster_machine_str()) }}
             {{ horizontal_table_column('Bean Weight (grams)', roast.bean_dose) }}
+            {{ horizontal_table_column('End Weight (grams)', roast.end_weight) }}
         </div>
         <div class="col-md-4">
             {{ horizontal_table_column('Drop Temp (F)', roast.drop_temp) }}
@@ -25,7 +26,6 @@
             {{ horizontal_table_column('Second Crack End Temp (F)', roast.sc_end_temp) }}
             {{ horizontal_table_column('Roast End Time', roast.end_time|sec_to_time) }}
             {{ horizontal_table_column('Roast End Temp (F)', roast.end_temp) }}
-            {{ horizontal_table_column('End Weight (grams)', roast.end_weight) }}
         </div>
         <div class="col-md-4">
             <div class="table_label left_align">Notes</div>
