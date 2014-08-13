@@ -1,6 +1,6 @@
 """
 Bean Counter - Track Your Coffee!
-Copyright (C) 2014  BonucyNudibranch (bouncynudibranch@gmail.com)
+Copyright (C) 2014  BouncyNudibranch (bouncynudibranch@gmail.com)
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
