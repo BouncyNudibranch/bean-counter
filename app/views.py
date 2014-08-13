@@ -23,7 +23,7 @@ from config import BEANS_PER_PAGE, BREWS_PER_PAGE, ROASTS_PER_PAGE, CUPPINGS_PER
 from app import app, db, login_manager
 from app.models import User, Bean, Brew, Roast, Cupping
 from app.forms import LoginForm, RegisterForm, BeanPurchaseForm, BrewForm, RoastForm, CuppingForm
-from app.util import timestring_to_seconds, seconds_to_timestring
+from app.util import timestring_to_seconds, seconds_to_timestring, calculate_dtr
 
 
 @login_manager.user_loader
@@ -300,7 +300,10 @@ def roast_list(page=1):
 # @login_required
 def roast_detail(roast_id):
     roast = Roast.query.get(roast_id)
-    return render_template('roast_detail.html', roast=roast)
+    extra_info = {
+        'dtr': calculate_dtr(roast.fc_begin_time, roast.end_time)
+    }
+    return render_template('roast_detail.html', roast=roast, extra_info=extra_info)
 
 
 @app.route('/roast/delete/<int:roast_id>')

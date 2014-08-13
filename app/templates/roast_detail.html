@@ -11,6 +11,7 @@
             {{ horizontal_table_column('Roaster', roast.roaster_machine_str()) }}
             {{ horizontal_table_column('Bean Weight (grams)', roast.bean_dose) }}
             {{ horizontal_table_column('End Weight (grams)', roast.end_weight) }}
+            {{ horizontal_table_column('Development Time Ratio (%)', extra_info.dtr) }}
         </div>
         <div class="col-md-4">
             {{ horizontal_table_column('Drop Temp (F)', roast.drop_temp) }}

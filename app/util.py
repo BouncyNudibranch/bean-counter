@@ -58,3 +58,9 @@ def seconds_to_timestring(seconds):
         mins = int(floor((seconds - days * SEC_PER_DAY - hrs * SEC_PER_HR) / SEC_PER_MIN))
         sec = seconds - days * SEC_PER_DAY - hrs * SEC_PER_HR - mins * SEC_PER_MIN
         return "{:02d}:{:02d}:{:02d}:{:02d}".format(days, hrs, mins, sec)
+
+
+def calculate_dtr(fc_begin, roast_end):
+    if fc_begin == 0 or roast_end == 0 or fc_begin is None or roast_end is None:
+        return None
+    return round((roast_end - fc_begin) / float(roast_end) * 100, 2)
