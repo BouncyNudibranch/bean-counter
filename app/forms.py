@@ -91,7 +91,7 @@ class RoastForm(Form):
 
 
 class CuppingForm(Form):
-    cupping_id = HiddenField('Cupping ID', validators=[Optional], default=None)
+    cupping_id = HiddenField('Cupping ID', validators=[Optional], default=0)
     roast_id = SelectField('Roast', coerce=int, validators=[NumberRange(min=0)])
     datetime = DateTimeField('Cupping Date', validators=[InputRequired()], default=datetime.now)
     aroma_notes = TextAreaField('Aroma')
