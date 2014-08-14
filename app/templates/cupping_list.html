@@ -1,0 +1,64 @@
+{% extends 'skeleton.html' %}
+
+{% from 'lists_util.html' import page_nav %}
+
+{% block body %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="pull-right">
+                {{ page_nav(cuppings, 'cupping_list') }}
+            </div>
+            <a class="btn btn-default pull-left" href="{{ url_for('cupping_add') }}">
+                <span class="glyphicon glyphicon-plus"></span>
+                Add Cupping
+            </a>
+        </div>
+    </div>
+    <div class="row top_margin_15">
+        <div class="col-sm-12">
+            <table class="table">
+                <tr>
+                    <th></th>
+                    <th>Cupping Date</th>
+                    <th>Roast Batch</th>
+                    <th>Bean</th>
+                </tr>
+            {% for cupping in cuppings.items %}
+                <tr>
+                    <td>
+                         <div class="btn-group">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="{{ url_for('cupping_add', cupping_id=cupping.id) }}">Edit</a></li>
+                                <li><a href="{{ url_for('cupping_detail', cupping_id=cupping.id) }}">View Details</a></li>
+                            </ul>
+                        </div>
+                    </td>
+                    <td>{{ cupping.datetime }}</td>
+                    <td>
+                    {% if brew.roast is not none %}
+                        <a href="{{ url_for('roast_detail', roast_id=cupping.roast.id) }}">{{ cupping.roast.roast_date }}</a>
+                    {% else %}
+                        N/A
+                    {% endif %}
+                    </td>
+                    <td>
+                    {% if brew.roast is not none and brew.roast.bean is not none %}
+                        <a href="{{ url_for('bean_detail', bean_id=cupping.roast.bean_id) }}">{{ cupping.roast.bean.name }}</a>
+                    {% else %}
+                        N/A
+                    {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </table>
+            <div class="pull-right">
+                {{ page_nav(cuppings, 'cupping_list') }}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

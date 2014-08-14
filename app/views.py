@@ -19,10 +19,10 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 from flask import render_template, redirect, g, request, url_for
 from flask_login import current_user, login_user, logout_user, login_required
-from config import BEANS_PER_PAGE, BREWS_PER_PAGE, ROASTS_PER_PAGE
+from config import BEANS_PER_PAGE, BREWS_PER_PAGE, ROASTS_PER_PAGE, CUPPINGS_PER_PAGE
 from app import app, db, login_manager
-from app.models import User, Bean, Brew, Roast
-from app.forms import LoginForm, RegisterForm, BeanPurchaseForm, BrewForm, RoastForm
+from app.models import User, Bean, Brew, Roast, Cupping
+from app.forms import LoginForm, RegisterForm, BeanPurchaseForm, BrewForm, RoastForm, CuppingForm
 from app.util import timestring_to_seconds, seconds_to_timestring
 
 
@@ -315,3 +315,75 @@ def roast_delete(roast_id):
     except AttributeError:
         pass
     return redirect(url_for('roast_list'))
+
+
+@app.route('/cupping/list')
+@app.route('/cupping/list/<int:page>')
+@login_required
+def cupping_list(page=1):
+    user = g.user
+    cuppings = Cupping.query.filter_by(user_id=user.id).order_by(Cupping.datetime.desc()).paginate(
+        page, CUPPINGS_PER_PAGE, False)
+    return render_template('cupping_list.html', cuppings=cuppings)
+
+
+@app.route('/cupping/add', methods=['GET', 'POST'])
+@app.route('/cupping/add/<int:cupping_id>', methods=['GET', 'POST'])
+@login_required
+def cupping_add(cupping_id=None):
+    user = g.user
+    form = CuppingForm()
+    if cupping_id:
+        cupping = Cupping.query.get(cupping_id)
+        form.cupping_id.data = cupping.id
+        form.roast_id.data = cupping.roast_id
+        form.acidity_notes.data = cupping.acidity_notes
+        form.aftertaste_notes.data = cupping.aftertaste_notes
+        form.aroma_notes.data = cupping.aroma_notes
+        form.datetime.data = cupping.datetime
+        form.extra_notes.data = cupping.extra_notes
+        form.flavour_notes.data = cupping.flavour_notes
+        form.mouthfeel_notes.data = cupping.mouthfeel_notes
+        form.overall_notes.data = cupping.overall_notes
+    if form.validate_on_submit():
+        form.cupping_id.data = int(form.cupping_id.data)
+        if form.cupping_id.data == 0:
+            cupping = Cupping()
+        else:
+            cupping = Cupping.query.get(form.cupping_id.data)
+            if cupping.user_id != user.id:
+                return redirect(url_for('cupping_list'))
+            cupping.overall_notes = form.overall_notes.data
+            cupping.mouthfeel_notes = form.mouthfeel_notes.data
+            cupping.flavour_notes = form.flavour_notes.data
+            cupping.extra_notes = form.extra_notes.data
+            cupping.acidity_notes = form.acidity_notes.data
+            cupping.aftertaste_notes = form.aftertaste_notes.data
+            cupping.aroma_notes = form.aroma_notes.data
+            cupping.datetime = form.datetime.data
+            cupping.roast_id = form.roast_id.data
+            cupping.user_id = user.id
+            Cupping.add_cupping(cupping)
+            return redirect(url_for('cupping_list'))
+    return render_template('cupping_add.html', form=form)
+    
+    
+@app.route('/cupping/detail/<int:cupping_id>')
+def cupping_detail(cupping_id):
+    user = g.user
+    cupping = Cupping.query.get(cupping_id)
+    return render_template('cupping_detail.html', cupping=cupping)
+    
+    
+@app.route('/cupping/delete/<int:cupping_id>')
+@login_required
+def cupping_delete(cupping_id):
+    user = g.user
+    cupping = Cupping.query.get(cupping_id)
+    try:
+        if cupping.user_id != user.id:
+            return redirect(url_for('cupping_list'))
+        cupping.remove_cupping()
+    except AttributeError:
+        pass
+    return redirect(url_for('cupping_list'))
