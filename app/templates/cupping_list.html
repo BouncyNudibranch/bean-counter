@@ -39,14 +39,14 @@
                     </td>
                     <td>{{ cupping.datetime }}</td>
                     <td>
-                    {% if brew.roast is not none %}
+                    {% if cupping.roast is not none %}
                         <a href="{{ url_for('roast_detail', roast_id=cupping.roast.id) }}">{{ cupping.roast.roast_date }}</a>
                     {% else %}
                         N/A
                     {% endif %}
                     </td>
                     <td>
-                    {% if brew.roast is not none and brew.roast.bean is not none %}
+                    {% if cupping.roast is not none and cupping.roast.bean is not none %}
                         <a href="{{ url_for('bean_detail', bean_id=cupping.roast.bean_id) }}">{{ cupping.roast.bean.name }}</a>
                     {% else %}
                         N/A

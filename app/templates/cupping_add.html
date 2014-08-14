@@ -14,19 +14,19 @@
         {{ form.hidden_tag() }}
         <div class="form-group">
             <div class="col-md-4">
-                {{ labeled_input(form.roast_id) }}
-                {{ labeled_input_datetime(form.datetime) }}
+                {{ labeled_input(form.roast_id, 3, 9) }}
+                {{ labeled_input_datetime(form.datetime, 3, 9) }}
             </div>
             <div class="col-md-4">
-                {{ labeled_input(form.aroma_notes) }}
-                {{ labeled_input(form.acidity_notes) }}
-                {{ labeled_input(form.flavour_notes) }}
-                {{ labeled_input(form.mouthfeel_notes) }}
-                {{ labeled_input(form.aftertaste_notes) }}
-                {{ labeled_input(form.overall_notes) }}
+                {{ labeled_input(form.aroma_notes, 3, 9) }}
+                {{ labeled_input(form.acidity_notes, 3, 9) }}
+                {{ labeled_input(form.flavour_notes, 3, 9) }}
+                {{ labeled_input(form.mouthfeel_notes, 3, 9) }}
+                {{ labeled_input(form.aftertaste_notes, 3, 9) }}
+                {{ labeled_input(form.overall_notes, 3, 9) }}
             </div>
             <div class="col-md-4">
-                {{ labeled_input(form.extra_notes) }}
+                {{ labeled_input(form.extra_notes, 3, 9) }}
             </div>
         </div>
         <div class="form-group">

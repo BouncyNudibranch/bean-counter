@@ -356,18 +356,18 @@ def cupping_add(cupping_id=None):
             cupping = Cupping.query.get(form.cupping_id.data)
             if cupping.user_id != user.id:
                 return redirect(url_for('cupping_list'))
-            cupping.overall_notes = form.overall_notes.data
-            cupping.mouthfeel_notes = form.mouthfeel_notes.data
-            cupping.flavour_notes = form.flavour_notes.data
-            cupping.extra_notes = form.extra_notes.data
-            cupping.acidity_notes = form.acidity_notes.data
-            cupping.aftertaste_notes = form.aftertaste_notes.data
-            cupping.aroma_notes = form.aroma_notes.data
-            cupping.datetime = form.datetime.data
-            cupping.roast_id = form.roast_id.data
-            cupping.user_id = user.id
-            Cupping.add_cupping(cupping)
-            return redirect(url_for('cupping_list'))
+        cupping.overall_notes = form.overall_notes.data
+        cupping.mouthfeel_notes = form.mouthfeel_notes.data
+        cupping.flavour_notes = form.flavour_notes.data
+        cupping.extra_notes = form.extra_notes.data
+        cupping.acidity_notes = form.acidity_notes.data
+        cupping.aftertaste_notes = form.aftertaste_notes.data
+        cupping.aroma_notes = form.aroma_notes.data
+        cupping.datetime = form.datetime.data
+        cupping.roast_id = form.roast_id.data
+        cupping.user_id = user.id
+        Cupping.add_cupping(cupping)
+        return redirect(url_for('cupping_list'))
     return render_template('cupping_add.html', form=form)
     
     

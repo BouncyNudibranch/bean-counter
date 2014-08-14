@@ -91,13 +91,13 @@ class RoastForm(Form):
 
 
 class CuppingForm(Form):
-    cupping_id = HiddenField('Cupping ID', validators=[Optional], default=0)
+    cupping_id = HiddenField('Cupping ID', validators=[Optional()], default=0)
     roast_id = SelectField('Roast', coerce=int, validators=[NumberRange(min=0)])
     datetime = DateTimeField('Cupping Date', validators=[InputRequired()], default=datetime.now)
-    aroma_notes = TextAreaField('Aroma')
-    acidity_notes = TextAreaField('Acidity')
-    flavour_notes = TextAreaField('Flavour')
-    mouthfeel_notes = TextAreaField('Mouthfeel')
-    aftertaste_notes = TextAreaField('Afertaste')
-    overall_notes = TextAreaField('Balance/Overall')
-    extra_notes = TextAreaField('Extra Notes')
+    aroma_notes = TextAreaField('Aroma', validators=[Optional()])
+    acidity_notes = TextAreaField('Acidity', validators=[Optional()])
+    flavour_notes = TextAreaField('Flavour', validators=[Optional()])
+    mouthfeel_notes = TextAreaField('Mouthfeel', validators=[Optional()])
+    aftertaste_notes = TextAreaField('Afertaste', validators=[Optional()])
+    overall_notes = TextAreaField('Balance/Overall', validators=[Optional()])
+    extra_notes = TextAreaField('Extra Notes', validators=[Optional()])
