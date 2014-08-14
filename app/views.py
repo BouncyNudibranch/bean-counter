@@ -333,6 +333,9 @@ def cupping_list(page=1):
 def cupping_add(cupping_id=None):
     user = g.user
     form = CuppingForm()
+    form.roast_id.choices = [(r.id, '%s - %s' % (r.roast_date, r.bean.name)) for r in Roast.query.filter(
+        Roast.user_id == user.id, Roast.bean_id > 0).order_by(Roast.roast_date.desc()).limit(10).all()]
+    form.roast_id.choices.append((0, 'N/A'))
     if cupping_id:
         cupping = Cupping.query.get(cupping_id)
         form.cupping_id.data = cupping.id
