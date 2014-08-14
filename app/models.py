@@ -249,6 +249,7 @@ class Cupping(db.Model):
     extra_notes = db.Column(db.Text)
 
     roast_id = db.Column(db.Integer, db.ForeignKey('roast.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
     def remove_cupping(self, commit=True):
         db.session.delete(self)
