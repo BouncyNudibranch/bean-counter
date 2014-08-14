@@ -21,7 +21,7 @@ from datetime import date, datetime
 from flask_wtf import Form
 from wtforms import StringField, PasswordField, IntegerField, SelectField, DateField, TextAreaField, DateTimeField, \
     HiddenField
-from wtforms.validators import DataRequired, EqualTo, Optional, NumberRange, Regexp
+from wtforms.validators import DataRequired, EqualTo, Optional, NumberRange, Regexp, InputRequired
 from app.models import BEAN_TYPES, GRIND_SIZES, BREW_METHODS, FILTER_TYPES, ROASTER_MACHINES
 
 TIME_REGEX = '([0-9]+:)?([0-9]+:)?([0-9]+:)?([0-9]+)'
@@ -88,3 +88,16 @@ class RoastForm(Form):
     notes = TextAreaField('Notes', validators=[Optional()])
     bean_id = SelectField('Bean', coerce=int, validators=[NumberRange(min=0)])
     roast_id = HiddenField('Roast ID', validators=[Optional()], default=0)
+
+
+class CuppingForm(Form):
+    cupping_id = HiddenField('Cupping ID', validators=[Optional], default=None)
+    roast_id = SelectField('Roast', coerce=int, validators=[NumberRange(min=0)])
+    datetime = DateTimeField('Cupping Date', validators=[InputRequired()], default=datetime.now)
+    aroma_notes = TextAreaField('Aroma')
+    acidity_notes = TextAreaField('Acidity')
+    flavour_notes = TextAreaField('Flavour')
+    mouthfeel_notes = TextAreaField('Mouthfeel')
+    aftertaste_notes = TextAreaField('Afertaste')
+    overall_notes = TextAreaField('Balance/Overall')
+    extra_notes = TextAreaField('Extra Notes')
