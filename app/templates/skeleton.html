@@ -27,6 +27,7 @@
                     <li><a href="{{ url_for('bean_list') }}">Beans</a></li>
                     <li><a href="{{ url_for('brew_list') }}">Brews</a></li>
                     <li><a href="{{ url_for('roast_list') }}">Roasts</a></li>
+                    <li><a href="{{ url_for('cupping_list') }}">Cuppings</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                 {% if g.user is not none and not g.user.is_authenticated() %}
