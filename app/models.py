@@ -159,6 +159,7 @@ class Roast(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
     brews = db.relationship('Brew', backref='roast', lazy='dynamic')
+    cuppings = db.relationship('Cupping', backref='roast', lazy='dynamic')
 
     def roaster_machine_str(self):
         return ROASTER_MACHINES[self.roaster_machine]
@@ -232,5 +233,30 @@ class Bean(db.Model):
     @staticmethod
     def add_bean(bean, commit=True):
         db.session.add(bean)
+        if commit:
+            db.session.commit()
+
+
+class Cupping(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    datetime = db.Column(db.DateTime)
+    aroma_notes = db.Column(db.Text)
+    acidity_notes = db.Column(db.Text)
+    flavour_notes = db.Column(db.Text)
+    mouthfeel_notes = db.Column(db.Text)
+    aftertaste_notes = db.Column(db.Text)
+    overall_notes = db.Column(db.Text)
+    extra_notes = db.Column(db.Text)
+
+    roast_id = db.Column(db.Integer, db.ForeignKey('roast.id'))
+
+    def remove_cupping(self, commit=True):
+        db.session.delete(self)
+        if commit:
+            db.session.commit()
+
+    @staticmethod
+    def add_cupping(cupping, commit=True):
+        db.session.add(cupping)
         if commit:
             db.session.commit()
