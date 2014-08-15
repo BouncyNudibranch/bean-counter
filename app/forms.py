@@ -44,7 +44,7 @@ class BeanPurchaseForm(Form):
     type = SelectField('Bean Type', choices=[(c, BEAN_TYPES[c]) for c in BEAN_TYPES],
                        coerce=int, validators=[NumberRange(min=0)])
     weight = IntegerField('Weight (grams)', validators=[NumberRange(min=0)])
-    purchase_date = DateField('Purchase Date', validators=[DataRequired()], default=date.today())
+    purchase_date = DateField('Purchase Date', validators=[DataRequired()], default=date.today)
     notes = TextAreaField('Notes', validators=[Optional()])
     bean_id = HiddenField('Bean ID', validators=[Optional()], default=0)
 
@@ -59,7 +59,7 @@ class BrewForm(Form):
                               coerce=int, validators=[NumberRange(min=0)])
     filter_type = SelectField('Filter Type', choices=[(f, FILTER_TYPES[f]) for f in FILTER_TYPES],
                               coerce=int, validators=[NumberRange(min=0)])
-    brew_date = DateTimeField('Brew Date', validators=[DataRequired()], default=datetime.now())
+    brew_date = DateTimeField('Brew Date', validators=[DataRequired()], default=datetime.now)
     notes = TextAreaField('Notes', validators=[Optional()])
     roast_batch = SelectField('Roast Batch', coerce=int, validators=[Optional()])
     bean_id = SelectField('Bean', coerce=int, validators=[NumberRange(min=0)])
@@ -84,7 +84,7 @@ class RoastForm(Form):
     end_weight = IntegerField('End Weight (grams)', validators=[NumberRange(min=0)])
     roaster_machine = SelectField('Roaster', choices=[(r, ROASTER_MACHINES[r]) for r in ROASTER_MACHINES],
                                   coerce=int, validators=[NumberRange(min=0)])
-    roast_date = DateTimeField('Roast Date', validators=[DataRequired()], default=datetime.now())
+    roast_date = DateTimeField('Roast Date', validators=[DataRequired()], default=datetime.now)
     notes = TextAreaField('Notes', validators=[Optional()])
     bean_id = SelectField('Bean', coerce=int, validators=[NumberRange(min=0)])
     roast_id = HiddenField('Roast ID', validators=[Optional()], default=0)
