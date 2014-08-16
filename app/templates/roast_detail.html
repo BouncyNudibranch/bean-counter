@@ -4,6 +4,7 @@
 
 {% block body %}
 <div class="container-fluid">
+    {% if g.user is not none and g.user.id == roast.user_id %}
     <div class="row">
         <div class="col-xs-12">
             <a class="btn btn-default pull-left" href="{{ url_for('roast_add', roast_id=roast.id) }}">
@@ -12,6 +13,7 @@
             </a>
         </div>
     </div>
+    {% endif %}
     <div class="row">
         <div class="col-md-4">
             {{ horizontal_table_column('Roast Date', roast.roast_date) }}

@@ -4,6 +4,7 @@
 
 {% block body %}
 <div class="container-fluid">
+    {% if g.user is not none and g.user.id == brew.user_id %}
     <div class="row">
         <div class="col-xs-12">
             <a class="btn btn-default pull-left" href="{{ url_for('brew_add', brew_id=brew.id) }}">
@@ -12,6 +13,7 @@
             </a>
         </div>
     </div>
+    {% endif %}
     <div class="row">
         <div class="col-md-4">
             {{ horizontal_table_column('Bean Name', brew.bean.name) }}
