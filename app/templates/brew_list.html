@@ -17,39 +17,43 @@
     </div>
     <div class="row top_margin_15">
         <div class="col-sm-12">
-            <table class="table">
-                <tr>
-                    <th></th>
-                    <th>Brew Date</th>
-                    <th>Bean</th>
-                    <th>Brew Method</th>
-                    <th>Roast Batch</th>
-                </tr>
-            {% for brew in brews.items %}
-                <tr>
-                    <td>
-                        <a class="btn btn-default" href="{{ url_for('brew_detail', brew_id=brew.id) }}" title="View Details">
-                            <span class="glyphicon glyphicon-list"></span>
-                        </a>
-                    </td>
-                    <td>{{ brew.brew_date }}</td>
-                    <td>
-                    {% if brew.bean is not none %}
-                        <a href="{{ url_for('bean_detail', bean_id=brew.bean.id) }}">{{ brew.bean.name }}</a>
-                    {% else %}
-                        N/A
-                    {% endif %}
-                    </td>
-                    <td>{{ brew.brew_method_str() }}</td>
-                    <td>
-                    {% if brew.roast is not none %}
-                        <a href="{{ url_for('roast_detail', roast_id=brew.roast.id) }}">{{ brew.roast.roast_date }}</a>
-                    {% else %}
-                        N/A
-                    {% endif %}
-                    </td>
-                </tr>
-            {% endfor %}
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Brew Date</th>
+                        <th>Bean</th>
+                        <th>Brew Method</th>
+                        <th>Roast Batch</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for brew in brews.items %}
+                    <tr>
+                        <td>
+                            <a class="btn btn-default" href="{{ url_for('brew_detail', brew_id=brew.id) }}" title="View Details">
+                                <span class="glyphicon glyphicon-list"></span>
+                            </a>
+                        </td>
+                        <td>{{ brew.brew_date }}</td>
+                        <td>
+                        {% if brew.bean is not none %}
+                            <a href="{{ url_for('bean_detail', bean_id=brew.bean.id) }}">{{ brew.bean.name }}</a>
+                        {% else %}
+                            N/A
+                        {% endif %}
+                        </td>
+                        <td>{{ brew.brew_method_str() }}</td>
+                        <td>
+                        {% if brew.roast is not none %}
+                            <a href="{{ url_for('roast_detail', roast_id=brew.roast.id) }}">{{ brew.roast.roast_date }}</a>
+                        {% else %}
+                            N/A
+                        {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
             </table>
             <div class="pull-right">
                 {{ page_nav(brews, 'brew_list') }}

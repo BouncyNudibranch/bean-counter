@@ -17,37 +17,41 @@
     </div>
     <div class="row top_margin_15">
         <div class="col-sm-12">
-            <table class="table">
-                <tr>
-                    <th></th>
-                    <th>Cupping Date</th>
-                    <th>Roast Batch</th>
-                    <th>Bean</th>
-                </tr>
-            {% for cupping in cuppings.items %}
-                <tr>
-                    <td>
-                        <a class="btn btn-default" href="{{ url_for('cupping_detail', cupping_id=cupping.id) }}" title="View Details">
-                            <span class="glyphicon glyphicon-list"></span>
-                        </a>
-                    </td>
-                    <td>{{ cupping.datetime }}</td>
-                    <td>
-                    {% if cupping.roast is not none %}
-                        <a href="{{ url_for('roast_detail', roast_id=cupping.roast.id) }}">{{ cupping.roast.roast_date }}</a>
-                    {% else %}
-                        N/A
-                    {% endif %}
-                    </td>
-                    <td>
-                    {% if cupping.roast is not none and cupping.roast.bean is not none %}
-                        <a href="{{ url_for('bean_detail', bean_id=cupping.roast.bean_id) }}">{{ cupping.roast.bean.name }}</a>
-                    {% else %}
-                        N/A
-                    {% endif %}
-                    </td>
-                </tr>
-            {% endfor %}
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Cupping Date</th>
+                        <th>Roast Batch</th>
+                        <th>Bean</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for cupping in cuppings.items %}
+                    <tr>
+                        <td>
+                            <a class="btn btn-default" href="{{ url_for('cupping_detail', cupping_id=cupping.id) }}" title="View Details">
+                                <span class="glyphicon glyphicon-list"></span>
+                            </a>
+                        </td>
+                        <td>{{ cupping.datetime }}</td>
+                        <td>
+                        {% if cupping.roast is not none %}
+                            <a href="{{ url_for('roast_detail', roast_id=cupping.roast.id) }}">{{ cupping.roast.roast_date }}</a>
+                        {% else %}
+                            N/A
+                        {% endif %}
+                        </td>
+                        <td>
+                        {% if cupping.roast is not none and cupping.roast.bean is not none %}
+                            <a href="{{ url_for('bean_detail', bean_id=cupping.roast.bean_id) }}">{{ cupping.roast.bean.name }}</a>
+                        {% else %}
+                            N/A
+                        {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
             </table>
             <div class="pull-right">
                 {{ page_nav(cuppings, 'cupping_list') }}

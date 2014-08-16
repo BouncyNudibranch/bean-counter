@@ -17,25 +17,29 @@
     </div>
     <div class="row top_margin_15">
         <div class="col-sm-12">
-            <table class="table">
-                <tr>
-                    <th></th>
-                    <th>Purchase Date</th>
-                    <th>Bean Type</th>
-                    <th>Bean Name</th>
-                </tr>
-            {% for purchase in beans.items %}
-                <tr>
-                    <td>
-                        <a class="btn btn-default" href="{{ url_for('bean_detail', bean_id=purchase.id) }}" title="View Details">
-                            <span class="glyphicon glyphicon-list"></span>
-                        </a>
-                    </td>
-                    <td>{{ purchase.purchase_date }}</td>
-                    <td>{{ purchase.bean_type_str() }}</td>
-                    <td>{{ purchase.name }}</td>
-                </tr>
-            {% endfor %}
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Purchase Date</th>
+                        <th>Bean Type</th>
+                        <th>Bean Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for purchase in beans.items %}
+                    <tr>
+                        <td>
+                            <a class="btn btn-default" href="{{ url_for('bean_detail', bean_id=purchase.id) }}" title="View Details">
+                                <span class="glyphicon glyphicon-list"></span>
+                            </a>
+                        </td>
+                        <td>{{ purchase.purchase_date }}</td>
+                        <td>{{ purchase.bean_type_str() }}</td>
+                        <td>{{ purchase.name }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
             </table>
             <div class="pull-right">
                 {{ page_nav(beans, 'bean_list') }}

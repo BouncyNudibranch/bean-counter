@@ -17,31 +17,35 @@
     </div>
     <div class="row top_margin_15">
         <div class="col-sm-12">
-            <table class="table">
-                <tr>
-                    <th></th>
-                    <th>Roast Date</th>
-                    <th>Bean</th>
-                    <th>Roaster</th>
-                </tr>
-            {% for roast in roasts.items %}
-                <tr>
-                    <td>
-                        <a class="btn btn-default" href="{{ url_for('roast_detail', roast_id=roast.id) }}" title="View Details">
-                            <span class="glyphicon glyphicon-list"></span>
-                        </a>
-                    </td>
-                    <td>{{ roast.roast_date }}</td>
-                    <td>
-                    {% if roast.bean is not none %}
-                        <a href="{{ url_for('bean_detail', bean_id=roast.bean.id) }}">{{ roast.bean.name }}</a>
-                    {% else %}
-                        N/A
-                    {% endif %}
-                    </td>
-                    <td>{{ roast.roaster_machine_str() }}</td>
-                </tr>
-            {% endfor %}
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Roast Date</th>
+                        <th>Bean</th>
+                        <th>Roaster</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for roast in roasts.items %}
+                    <tr>
+                        <td>
+                            <a class="btn btn-default" href="{{ url_for('roast_detail', roast_id=roast.id) }}" title="View Details">
+                                <span class="glyphicon glyphicon-list"></span>
+                            </a>
+                        </td>
+                        <td>{{ roast.roast_date }}</td>
+                        <td>
+                        {% if roast.bean is not none %}
+                            <a href="{{ url_for('bean_detail', bean_id=roast.bean.id) }}">{{ roast.bean.name }}</a>
+                        {% else %}
+                            N/A
+                        {% endif %}
+                        </td>
+                        <td>{{ roast.roaster_machine_str() }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
             </table>
             <div class="pull-right">
                 {{ page_nav(roasts, 'roast_list') }}
