@@ -5,6 +5,14 @@
 {% block body %}
 <div class="container-fluid">
     <div class="row">
+        <div class="col-xs-12">
+            <a class="btn btn-default pull-left" href="{{ url_for('cupping_add', cupping_id=cupping.id) }}">
+                <span class="glyphicon glyphicon-pencil"></span>
+                Edit
+            </a>
+        </div>
+    </div>
+    <div class="row">
         <div class="col-md-4">
             {{ horizontal_table_column('Roast Batch', cupping.roast.roast_date) }}
             {{ horizontal_table_column('Cupping Date', cupping.datetime) }}

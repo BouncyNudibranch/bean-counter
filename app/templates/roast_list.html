@@ -27,15 +27,9 @@
             {% for roast in roasts.items %}
                 <tr>
                     <td>
-                         <div class="btn-group">
-                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                                <span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu" role="menu">
-                                <li><a href="{{ url_for('roast_add', roast_id=roast.id) }}">Edit</a></li>
-                                <li><a href="{{ url_for('roast_detail', roast_id=roast.id) }}">View Details</a></li>
-                            </ul>
-                        </div>
+                        <a class="btn btn-default" href="{{ url_for('roast_detail', roast_id=roast.id) }}" title="View Details">
+                            <span class="glyphicon glyphicon-list"></span>
+                        </a>
                     </td>
                     <td>{{ roast.roast_date }}</td>
                     <td>

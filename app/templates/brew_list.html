@@ -28,15 +28,9 @@
             {% for brew in brews.items %}
                 <tr>
                     <td>
-                         <div class="btn-group">
-                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                                <span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu" role="menu">
-                                <li><a href="{{ url_for('brew_add', brew_id=brew.id) }}">Edit</a></li>
-                                <li><a href="{{ url_for('brew_detail', brew_id=brew.id) }}">View Details</a></li>
-                            </ul>
-                        </div>
+                        <a class="btn btn-default" href="{{ url_for('brew_detail', brew_id=brew.id) }}" title="View Details">
+                            <span class="glyphicon glyphicon-list"></span>
+                        </a>
                     </td>
                     <td>{{ brew.brew_date }}</td>
                     <td>

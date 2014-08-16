@@ -27,15 +27,9 @@
             {% for cupping in cuppings.items %}
                 <tr>
                     <td>
-                         <div class="btn-group">
-                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                                <span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu" role="menu">
-                                <li><a href="{{ url_for('cupping_add', cupping_id=cupping.id) }}">Edit</a></li>
-                                <li><a href="{{ url_for('cupping_detail', cupping_id=cupping.id) }}">View Details</a></li>
-                            </ul>
-                        </div>
+                        <a class="btn btn-default" href="{{ url_for('cupping_detail', cupping_id=cupping.id) }}" title="View Details">
+                            <span class="glyphicon glyphicon-list"></span>
+                        </a>
                     </td>
                     <td>{{ cupping.datetime }}</td>
                     <td>

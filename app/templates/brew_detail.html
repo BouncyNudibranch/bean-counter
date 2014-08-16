@@ -5,6 +5,14 @@
 {% block body %}
 <div class="container-fluid">
     <div class="row">
+        <div class="col-xs-12">
+            <a class="btn btn-default pull-left" href="{{ url_for('brew_add', brew_id=brew.id) }}">
+                <span class="glyphicon glyphicon-pencil"></span>
+                Edit
+            </a>
+        </div>
+    </div>
+    <div class="row">
         <div class="col-md-4">
             {{ horizontal_table_column('Bean Name', brew.bean.name) }}
             {{ horizontal_table_column('Brew Date', brew.brew_date) }}

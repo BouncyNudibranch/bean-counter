@@ -27,15 +27,9 @@
             {% for purchase in beans.items %}
                 <tr>
                     <td>
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                                <span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu" role="menu">
-                                <li><a href="{{ url_for('bean_add', bean_id=purchase.id) }}">Edit</a></li>
-                                <li><a href="{{ url_for('bean_detail', bean_id=purchase.id) }}">View Details</a></li>
-                            </ul>
-                        </div>
+                        <a class="btn btn-default" href="{{ url_for('bean_detail', bean_id=purchase.id) }}" title="View Details">
+                            <span class="glyphicon glyphicon-list"></span>
+                        </a>
                     </td>
                     <td>{{ purchase.purchase_date }}</td>
                     <td>{{ purchase.bean_type_str() }}</td>
