@@ -20,7 +20,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 from datetime import date, datetime
 from flask_wtf import Form
 from wtforms import StringField, PasswordField, IntegerField, SelectField, DateField, TextAreaField, DateTimeField, \
-    HiddenField
+    HiddenField, DecimalField
 from wtforms.validators import DataRequired, EqualTo, Optional, NumberRange, Regexp, InputRequired
 from app.models import BEAN_TYPES, GRIND_SIZES, BREW_METHODS, FILTER_TYPES, ROASTER_MACHINES
 
@@ -52,7 +52,7 @@ class BeanPurchaseForm(Form):
 class BrewForm(Form):
     grind_size = SelectField('Grind Size', choices=[(g, GRIND_SIZES[g]) for g in GRIND_SIZES],
                              coerce=int, validators=[NumberRange(min=0)])
-    bean_dose = IntegerField('Bean Weight (grams)', validators=[NumberRange(min=0)])
+    bean_dose = DecimalField('Bean Weight (grams)', validators=[NumberRange(min=0)])
     water_dose = IntegerField('Water Volume (mL)', validators=[NumberRange(min=0)])
     extraction_time = StringField('Extraction Time', validators=[Regexp(TIME_REGEX)])
     brew_method = SelectField('Brew Method', choices=[(m, BREW_METHODS[m]) for m in BREW_METHODS],
@@ -67,7 +67,7 @@ class BrewForm(Form):
 
 
 class RoastForm(Form):
-    bean_dose = IntegerField('Bean Weight (grams)', validators=[NumberRange(min=0)])
+    bean_dose = DecimalField('Bean Weight (grams)', validators=[NumberRange(min=0)])
     drop_temp = IntegerField('Drop Temp (F)', validators=[NumberRange(min=0)])
     dry_end_time = StringField('Drying Phase End Time', validators=[Regexp(TIME_REGEX)])
     dry_end_temp = IntegerField('Drying Phase End Temp (F)', validators=[NumberRange(min=0)])
@@ -81,7 +81,7 @@ class RoastForm(Form):
     sc_end_temp = IntegerField('Second Crack End Temp (F)', validators=[NumberRange(min=0)])
     end_time = StringField('End Time', validators=[Regexp(TIME_REGEX)])
     end_temp = IntegerField('End Temp (F)', validators=[NumberRange(min=0)])
-    end_weight = IntegerField('End Weight (grams)', validators=[NumberRange(min=0)])
+    end_weight = DecimalField('End Weight (grams)', validators=[NumberRange(min=0)])
     roaster_machine = SelectField('Roaster', choices=[(r, ROASTER_MACHINES[r]) for r in ROASTER_MACHINES],
                                   coerce=int, validators=[NumberRange(min=0)])
     roast_date = DateTimeField('Roast Date', validators=[DataRequired()], default=datetime.now)

@@ -24,6 +24,7 @@ from app import app, db, login_manager
 from app.models import User, Bean, Brew, Roast, Cupping
 from app.forms import LoginForm, RegisterForm, BeanPurchaseForm, BrewForm, RoastForm, CuppingForm
 from app.util import timestring_to_seconds, seconds_to_timestring, calculate_dtr
+from decimal import Decimal
 
 
 @login_manager.user_loader
@@ -164,7 +165,7 @@ def brew_add(brew_id=None):
         form.roast_batch.data = brew.roast_id
         form.bean_id.data = brew.bean_id
         form.grind_size.data = brew.grind_size
-        form.bean_dose.data = brew.bean_dose
+        form.bean_dose.data = Decimal(brew.bean_dose) / 100
         form.water_dose.data = brew.water_dose
         form.extraction_time.data = seconds_to_timestring(brew.extraction_time)
         form.brew_method.data = brew.brew_method
@@ -181,7 +182,7 @@ def brew_add(brew_id=None):
             if brew.user_id != user.id:
                 return redirect(url_for('brew_list'))
         brew.grind_size = form.grind_size.data
-        brew.bean_dose = form.bean_dose.data
+        brew.bean_dose = int(form.bean_dose.data * 100)
         brew.water_dose = form.water_dose.data
         brew.extraction_time = timestring_to_seconds(form.extraction_time.data)
         brew.brew_method = form.brew_method.data
@@ -236,7 +237,7 @@ def roast_add(roast_id=None):
         user_id=user.id).order_by(Bean.purchase_date.desc()).limit(10).all()]
     if roast_id:
         roast = Roast.query.get(roast_id)
-        form.bean_dose.data = roast.bean_dose
+        form.bean_dose.data = Decimal(roast.bean_dose) / 100
         form.drop_temp.data = roast.drop_temp
         form.dry_end_time.data = seconds_to_timestring(roast.dry_end_time)
         form.dry_end_temp.data = roast.dry_end_temp
@@ -250,7 +251,7 @@ def roast_add(roast_id=None):
         form.sc_end_temp.data = roast.sc_end_temp
         form.end_time.data = seconds_to_timestring(roast.end_time)
         form.end_temp.data = roast.end_temp
-        form.end_weight.data = roast.end_weight
+        form.end_weight.data = Decimal(roast.end_weight) / 100
         form.roaster_machine.data = roast.roaster_machine
         form.roast_date.data = roast.roast_date
         form.notes.data = roast.notes
@@ -264,7 +265,7 @@ def roast_add(roast_id=None):
             roast = Roast.query.get(form.roast_id.data)
             if roast.user_id != user.id:
                 return redirect(url_for('roast_list'))
-        roast.bean_dose = form.bean_dose.data
+        roast.bean_dose = int(form.bean_dose.data * 100)
         roast.drop_temp = form.drop_temp.data
         roast.dry_end_time = timestring_to_seconds(form.dry_end_time.data)
         roast.dry_end_temp = form.dry_end_temp.data
@@ -278,7 +279,7 @@ def roast_add(roast_id=None):
         roast.sc_end_temp = form.sc_end_temp.data
         roast.end_time = timestring_to_seconds(form.end_time.data)
         roast.end_temp = form.end_temp.data
-        roast.end_weight = form.end_weight.data
+        roast.end_weight = int(form.end_weight.data * 100)
         roast.roaster_machine = form.roaster_machine.data
         roast.roast_date = form.roast_date.data
         roast.notes = form.notes.data
