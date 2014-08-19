@@ -23,7 +23,7 @@ from config import BEANS_PER_PAGE, BREWS_PER_PAGE, ROASTS_PER_PAGE, CUPPINGS_PER
 from app import app, db, login_manager
 from app.models import User, Bean, Brew, Roast, Cupping
 from app.forms import LoginForm, RegisterForm, BeanPurchaseForm, BrewForm, RoastForm, CuppingForm
-from app.util import timestring_to_seconds, seconds_to_timestring, calculate_dtr
+from app.util import timestring_to_seconds, seconds_to_timestring, calculate_dtr, calculate_moisture_loss
 from decimal import Decimal
 
 
@@ -305,7 +305,8 @@ def roast_list(page=1):
 def roast_detail(roast_id):
     roast = Roast.query.get(roast_id)
     extra_info = {
-        'dtr': calculate_dtr(roast.fc_begin_time, roast.end_time)
+        'dtr': calculate_dtr(roast.fc_begin_time, roast.end_time),
+        'mloss': calculate_moisture_loss(roast.bean_dose, roast.end_weight)
     }
     return render_template('roast_detail.html', roast=roast, extra_info=extra_info)
 

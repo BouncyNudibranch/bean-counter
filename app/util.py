@@ -64,3 +64,9 @@ def calculate_dtr(fc_begin, roast_end):
     if fc_begin == 0 or roast_end == 0 or fc_begin is None or roast_end is None:
         return None
     return round((roast_end - fc_begin) / float(roast_end) * 100, 2)
+
+
+def calculate_moisture_loss(start_weight, end_weight):
+    if start_weight == 0 or start_weight is None or end_weight == 0 or end_weight is None:
+        return None
+    return round((1 - (end_weight / float(start_weight))) * 100, 2)
